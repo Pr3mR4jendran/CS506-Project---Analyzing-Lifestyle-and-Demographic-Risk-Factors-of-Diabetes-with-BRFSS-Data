@@ -1,5 +1,16 @@
 # CS506 Project Proposal (9/22)
+## 1. Description of the Project
+Our project focuses on predicting **diabetes among the U.S. population** using structured health and lifestyle data. The dataset we selected, the **CDC Diabetes Health Indicators Dataset (BRFSS)**, contains survey responses from hundreds of thousands of adults and includes features such as body mass index (BMI), physical activity, general health, and demographic traits.  
 
+The goal is to use these features to train machine learning models that can predict whether an individual has diabetes. This project also gives us the opportunity to study which health indicators are most strongly associated with diabetes risk, and to explore how lifestyle and demographic factors contribute to outcomes.  
+
+By working with this dataset, we will go through the full **data science pipeline**:  
+- Cleaning and preparing the data  
+- Selecting and extracting features  
+- Training multiple models  
+- Visualizing results  
+- Testing performance
+- 
 ## Data Collection Plan 
 
 ### Type of Data Needed
