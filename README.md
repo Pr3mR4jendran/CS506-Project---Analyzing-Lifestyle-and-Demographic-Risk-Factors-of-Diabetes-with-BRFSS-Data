@@ -45,42 +45,42 @@ Visualizations will include both result presentation and primary exploratory dat
 
 ### Exploratory Data Visualizations (before modeling)
 
-  1. US Demographic Heat Map
-    - Purpose: to highlight regional distribution of diabetes risk factors across the U.S.
-    - This will include a choropleth map showing the prevalence (percentage of respondents within each category) of diabetes and prediabetes in U.S. states.
-    - The visualization may reflect biological risk shaped by environmental, socioeconomic, and healthcare access factors.
+1. **US Demographic Heat Map:**
+- Purpose: to highlight regional distribution of diabetes risk factors across the U.S.
+- This will include a choropleth map showing the prevalence (percentage of respondents within each category) of diabetes and prediabetes in U.S. states.
+- The visualization may reflect biological risk shaped by environmental, socioeconomic, and healthcare access factors.
 
-  2. BMI and Age vs. Diabetes Status
-    - Purpose: to examine how weight and age patterns differ by No Diabetes, Prediabetes, and Diabetes.
-    - This will be represented by box and scatter plots of BMI and age groups by diabetes categories.
+2. **BMI and Age vs. Diabetes Status:**
+- Purpose: to examine how weight and age patterns differ by No Diabetes, Prediabetes, and Diabetes.
+- This will be represented by box and scatter plots of BMI and age groups by diabetes categories.
 
-  3. Lifestyle Factor Comparisons
-    - Purpose: uncover behavioral risk factors that are potentially predictive of diabetes.
-    - This will include grouped bar charts for smoking, physical activity, and heavy drinking by diabetes status.
-    - The plots could depict how behaviors like smoking, inactivity, and heavy drinking exacerbate metabolic stress, accelerating progression from prediabetes to diabetes.
+3. **Lifestyle Factor Comparisons:**
+- Purpose: uncover behavioral risk factors that are potentially predictive of diabetes.
+- This will include grouped bar charts for smoking, physical activity, and heavy drinking by diabetes status.
+- The plots could depict how behaviors like smoking, inactivity, and heavy drinking exacerbate metabolic stress, accelerating progression from prediabetes to diabetes.
 
 
 ### Result Visualizations (after modeling)
 
-  1. PCA or t-SNE Scatterplot (Unsupervised Learning)
-    - Purpose: visualize whether lifestyle and demographic characteristics tend to cluster naturally according to diabetes outcomes.
-    - These would allow dimensionality reduction of the data to 2D.
-    - The plots could essentially have two panels: one colored by actual diabetes labels and one colored by unsupervised groups (e.g., KMeans with k=3).
-    - This would reflect on novel relational patterns between different dataset attributes
+1. **PCA or t-SNE Scatterplot (Unsupervised Learning):**
+- Purpose: visualize whether lifestyle and demographic characteristics tend to cluster naturally according to diabetes outcomes.
+- These would allow dimensionality reduction of the data to 2D.
+- The plots could essentially have two panels: one colored by actual diabetes labels and one colored by unsupervised groups (e.g., KMeans with k=3).
+- This would reflect on novel relational patterns between different dataset attributes
 
-  2. Confusion Matrix Heatmap (Supervised Learning)
-    - Purpose: show which categories the classifier performs well on, and which it gets confused between (e.g., Prediabetes vs. Diabetes).
-    - In this matrix, the rows will be true classes and the columns will be predicted classes.
-    - Following that, the normalized values will be displayed as a heatmap for readability.
+2. **Confusion Matrix Heatmap (Supervised Learning):**
+- Purpose: show which categories the classifier performs well on, and which it gets confused between (e.g., Prediabetes vs. Diabetes).
+- In this matrix, the rows will be true classes and the columns will be predicted classes.
+- Following that, the normalized values will be displayed as a heatmap for readability.
 
-  3. ROC Curves / Precision-Recall Curves (Supervised Learning)
-    - Purpose: test model discrimination capacity, especially for imbalanced classes.
-    - This would include one curve per category of diabetes using a One-vs-Rest approach.
-    - It will demonstrate how well biological risk factors enable discrimination between healthy, prediabetic, and diabetic states.
+3. **ROC Curves / Precision-Recall Curves (Supervised Learning):**
+- Purpose: test model discrimination capacity, especially for imbalanced classes.
+- This would include one curve per category of diabetes using a One-vs-Rest approach.
+- It will demonstrate how well biological risk factors enable discrimination between healthy, prediabetic, and diabetic states.
 
 
 ### Summary:
 Collectively, these plots will deliver:
-  - A clear view of geographic, demographic, and lifestyle trends in the BRFSS dataset.
-  - Intuitive representations of model performance (confusion matrix, ROC/PR).
-  - Uncover the underlying data structure with unsupervised methods (PCA/t-SNE).
+- A clear view of geographic, demographic, and lifestyle trends in the BRFSS dataset.
+- Intuitive representations of model performance (confusion matrix, ROC/PR).
+- Uncover the underlying data structure with unsupervised methods (PCA/t-SNE).
