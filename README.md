@@ -3,33 +3,32 @@
 ## Data Collection Plan 
 
 ### Type of Data Needed
-Our project requires **retinal fundus** images—photographic scans of the interior surface of the eye, including the retina, optic disc, macula, and posterior pole. 
-These images are widely used in ophthalmology to detect conditions such as diabetic retinopathy (DR), glaucoma, and age-related macular degeneration.
-Beyond eye health, prior research has shown that deep learning models trained on fundus images can predict broader systemic health risk factors such as age, gender, smoking history, blood pressure, and even cardiovascular risk.
+Our project requires **structured, tabular health data** that includes both metabolic and demographic features. Specifically, the dataset must contain indicators such as:
+- **Metabolic features**: plasma glucose concentration, blood pressure, skinfold thickness, insulin levels, and body mass index (BMI).
+- **Demographic features**: age, number of pregnancies, and diabetes pedigree function (a measure of family history risk).
+- **Label**: a single binary indicator of diabetes diagnosis (yes/no).
 
-For this project, we will focus on the specific healthcare problem of diabetic retinopathy (DR) detection. DR is a progressive eye disease caused by diabetes that can lead to blindness if untreated, and automated detection from fundus images is a clinically relevant machine learning task.
+This type of data is well suited for **supervised classification**, where the goal is to predict whether an individual has diabetes given a set of health related features. Models such as logistic regression, random forests, or gradient boosting are appropriate for this dataset.
 
 ### Chosen Dataset
-We will use a consolidated dataset available on Kaggle that combines three well-known retinal imaging datasets: EyePACS, APTOS, and Messidor. Together, these datasets provide a diverse collection of labeled fundus images, with severity labels for diabetic retinopathy.
+We will rely on publicly available, de-identified datasets that are widely used in epidemiological and machine learning studies.
 
-- **EyePACS**: Contains ~35,000 high-resolution fundus images labeled across five stages of DR severity (no DR, mild, moderate, severe, proliferative). Originally used in the 2015 Kaggle Diabetic Retinopathy Detection competition.
+- **Pima Indian Diabetes Dataset (PID)**: A benchmark dataset with **768 samples** of Pima Indian women, collected by the National Institute of Diabetes and Digestive and Kidney Diseases. It includes all the metabolic and demographic features listed above, with a binary diabetes outcome label
 
-- **APTOS 2019**: Curated by the Asia Pacific Tele-Ophthalmology Society for a Kaggle competition. It provides labeled DR images with strong quality control.
+- **Diabetes Health Indicators Dataset**: A larger dataset curated from the CDC Behavioral Risk Factor Surveillance System (BRFSS), encompassing responses from U.S. adults about health status, lifestyle, and risk factors. This dataset expands beyond Pima by providing more recent and diverse population data.
 
-- **Messidor**: A smaller but highly cited dataset of retinal images, supported by the French Ministry of Research and Defense within the 2004 TECHNO-VISION program.
-
-By using the combined Kaggle dataset, we ensure both breadth (multiple sources, improving generalizability) and depth (thousands of images with consistent DR annotations).
+By combining insights from both datasets, we can balance the controlled, smaller-scale benchmark dataset (PID) with the larger, population-level dataset (BRFSS).
 
 ### Method of Collection
-The dataset has already been publicly curated and made accessible through Kaggle. Our collection method will therefore consist of:
+Since these datasets are publicly available and de-identified, our collection method will be limited to:
 
-1. **Dataset Access**: Downloading the Kaggle dataset [here](https://www.kaggle.com/datasets/ascanipek/eyepacs-aptos-messidor-diabetic-retinopathy). This provides standardized train/test splits and metadata (DR labels, image IDs, and severity levels).
-2. **Preprocessing**: Images come pre-processed to 600x600
-3. **Augmentation**: To address class imbalance (ex, fewer severe DR cases compared to normal), data augmentation techniques such as horizontal flips, random rotations, and brightness adjustments will be applied.
-4. **Label Utilization**: The provided categorical DR labels (ranging from no DR to proliferative DR) will serve as ground truth for supervised training.
+1. **Dataset Access**: Download the Pima Indian Diabetes Dataset via Kaggle [here](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database/data). Download the Diabetes Health Indicators Dataset from Kaggle [here](https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset).
+2. **Data Cleaning**: Though much of the data is clean, there remain imbalances. We would handle missing or inconsistent values (ex, insulin level = 0, which may indicate missing data rather than actual measurement). Normalize or standardize features where necessary.
+3. **Label Encoding**: Ensure the target variable (diabetes diagnosis) is consistently represented as a binary label across datasets.
+4. **Train-Test Splitting**: Partition the datasets into training and testing subsets to evaluate generalization. If combining datasets, we will clearly separate by source to avoid leakage.
 
 ### Justification of Choice
-Using a curated Kaggle dataset is preferable to attempting new data collection for several reasons:
-- **Ethical and privacy considerations**: Fundus images are classified as medical data. Using publicly available, de-identified datasets avoids privacy risks.
-- **Clinical validity**: EyePACS, APTOS, and Messidor are widely used in ophthalmology AI research, ensuring our results are comparable to prior work.
-- **Practical feasibility**: Collecting new fundus scans would require specialized equipment and patient consent, which is beyond the scope of a semester long course project.
+Using established and openly available datasets offers numerous advantages:
+- **Reproducibility**: Both PID and BRFSS-derived datasets are widely studied in academic and ML contexts, allowing comparison with prior results.
+- **Ethical Compliance**: The datasets come de-identified, avoiding privacy concerns that would arise with collecting new patient data.
+- **Practical feasibility**: Collecting new clinical data would require significant resources and patient recruitment, which is not feasible in the scope of this course project.
