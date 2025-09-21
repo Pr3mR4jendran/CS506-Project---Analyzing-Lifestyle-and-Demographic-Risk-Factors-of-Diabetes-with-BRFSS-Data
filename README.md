@@ -84,3 +84,11 @@ Collectively, these plots will deliver:
 - A clear view of geographic, demographic, and lifestyle trends in the BRFSS dataset.
 - Intuitive representations of model performance (confusion matrix, ROC/PR).
 - Uncover the underlying data structure with unsupervised methods (PCA/t-SNE).
+
+
+## Test Plan
+
+To ensure reliable model evaluation and prevent overfitting, we will follow a systematic testing strategy.
+
+We plan to divide the data into a **training set (80% ~ 160,000 observations)** which will be used for model fitting and hyperparameter tuning, and a **test set (20% ~ 40,000 observations)** which will be used to evaluate the generalization ability of the final model.
+The 80/20 split is chosen as it provides enough data for the models to be able to find complex patterns, and still retains a very large, statistically significant remainder for us to use as a test set. With over 200,000 individuals in BRFSS, even 20% makes for a robust test set.
