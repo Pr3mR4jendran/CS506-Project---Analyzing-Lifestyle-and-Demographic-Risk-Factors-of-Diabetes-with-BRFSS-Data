@@ -10,7 +10,7 @@ By working with this dataset, we will go through the full **data science pipelin
 - Training multiple models  
 - Visualizing results  
 - Testing performance
-- 
+
 ## Data Collection Plan 
 
 ### Type of Data Needed
