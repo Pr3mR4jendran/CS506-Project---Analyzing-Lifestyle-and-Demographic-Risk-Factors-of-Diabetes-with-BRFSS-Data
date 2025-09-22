@@ -65,6 +65,7 @@ We will begin with simpler models to establish a baseline:
 - **Naïve Bayes Classifier**
 - **k-Nearest Neighbors (kNN)**
 - **Decision Trees**
+- **Support Vector Machines (SVM)**
 
 ### Advanced Models
 
