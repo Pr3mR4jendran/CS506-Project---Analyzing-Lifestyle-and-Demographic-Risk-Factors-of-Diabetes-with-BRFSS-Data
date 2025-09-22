@@ -1,55 +1,97 @@
-# CS506 Project Proposal (9/22)
-## 1. Description of the Project
-Our project focuses on predicting **diabetes among the U.S. population** using structured health and lifestyle data. The dataset we selected, the **CDC Diabetes Health Indicators Dataset (BRFSS)**, contains survey responses from hundreds of thousands of adults and includes features such as body mass index (BMI), physical activity, general health, and demographic traits.  
+# Analyzing Lifestyle and Demographic Risk Factors of Diabetes with BRFSS Data
 
-The goal is to use these features to train machine learning models that can predict whether an individual has diabetes. This project also gives us the opportunity to study which health indicators are most strongly associated with diabetes risk, and to explore how lifestyle and demographic factors contribute to outcomes.  
+## Team Members
+- Arnav Singh (U19589314)
+- Jyoti Shree (U74678990)
+- Prem Rajendran (U99248729)
+- Saneeya Vichare (U75237907)
+- Sara Alsowaimel (U86273437)
 
-By working with this dataset, we will go through the full **data science pipeline**:  
+
+## Description of the Project
+Our project focuses on predicting diabetes among the U.S. population using structured health and lifestyle data. The dataset we selected, the CDC Behavioral Risk Factor Surveillance System (BRFSS) Dataset, contains survey responses from hundreds of thousands of adults and includes features such as body mass index (BMI), physical activity, general health, and demographic traits.  
+
+Our goal is to use these features to train machine learning models that can predict whether an individual has diabetes or is pre-diabetic. This project also gives us the opportunity to study which health indicators are most strongly associated with diabetes risk, and to explore how lifestyle and demographic factors contribute to outcomes.  
+
+By working with this dataset, we will go through the full data science pipeline:  
 - Cleaning and preparing the data  
 - Selecting and extracting features  
 - Training multiple models  
 - Visualizing results  
 - Testing performance
 
+
 ## Data Collection Plan 
 
 ### Type of Data Needed
-Our project requires **structured, tabular health data** that includes both metabolic and demographic features. Specifically, the dataset must contain indicators such as:
+Our project uses structured, tabular health data that includes both metabolic and demographic features. Specifically, the dataset must contain indicators such as:
 - **Metabolic features**: plasma glucose concentration, blood pressure, skinfold thickness, insulin levels, and body mass index (BMI).
 - **Demographic features**: age, number of pregnancies, and diabetes pedigree function (a measure of family history risk).
-- **Label**: a single binary indicator of diabetes diagnosis (yes/no).
+- **Label**: a three class indicator of diabetes diagnosis, where the 3 classes are no diabetes, pre-diabetes, and diabetes.
 
-This type of data is well suited for **supervised classification**, where the goal is to predict whether an individual has diabetes given a set of health related features. Models such as logistic regression, random forests, or gradient boosting are appropriate for this dataset.
+This data is will be used for supervised classification, where the goal is to predict whether an individual has diabetes or pre-diabetes given a set of health related features.
 
 ### Chosen Dataset
-We will rely on publicly available, de-identified datasets that are widely used in epidemiological and machine learning studies.
+We will rely on the CDC Behavioral Risk Factor Surveillance System (BRFSS) 2024 dataset, which is publicly available and fully de-identified. BRFSS is one of the largest continuously conducted health surveys in the world, with hundreds of thousands of U.S. adult respondents each year.  
 
-- **Pima Indian Diabetes Dataset (PID)**: A benchmark dataset with **768 samples** of Pima Indian women, collected by the National Institute of Diabetes and Digestive and Kidney Diseases. It includes all the metabolic and demographic features listed above, with a binary diabetes outcome label
+The dataset includes a wide range of demographic, lifestyle, and health-related indicators, such as body mass index (BMI), physical activity, smoking, alcohol use, and self-reported health conditions. Importantly, it also contains information on diabetes status, which will serve as the target label for our classification task.  
 
-- **Diabetes Health Indicators Dataset**: A larger dataset curated from the CDC Behavioral Risk Factor Surveillance System (BRFSS), encompassing responses from U.S. adults about health status, lifestyle, and risk factors. This dataset expands beyond Pima by providing more recent and diverse population data.
-
-By combining insights from both datasets, we can balance the controlled, smaller-scale benchmark dataset (PID) with the larger, population-level dataset (BRFSS).
+By using the BRFSS 2024 dataset, we gain access to a large and diverse sample of the U.S. population. This allows us to build models that generalize better to real-world populations while also uncovering patterns in diabetes risk across different demographic and lifestyle groups.
 
 ### Method of Collection
 Since these datasets are publicly available and de-identified, our collection method will be limited to:
 
-1. **Dataset Access**: Download the Pima Indian Diabetes Dataset via Kaggle [here](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database/data). Download the Diabetes Health Indicators Dataset from Kaggle [here](https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset).
-2. **Data Cleaning**: Though much of the data is clean, there remain imbalances. We would handle missing or inconsistent values (ex, insulin level = 0, which may indicate missing data rather than actual measurement). Normalize or standardize features where necessary.
-3. **Label Encoding**: Ensure the target variable (diabetes diagnosis) is consistently represented as a binary label across datasets.
-4. **Train-Test Splitting**: Partition the datasets into training and testing subsets to evaluate generalization. If combining datasets, we will clearly separate by source to avoid leakage.
+1. **Dataset Access**: The dataset is publicly available in ASCII and SAS format on the [CDC website](https://www.cdc.gov/brfss/annual_data/annual_2024.html), along with a codebook that contains the schema of the dataset.
+2. **Data Cleaning**: The data will be converted into a tabular .csv file in Python for easier import into Pandas. Although much of the data is clean, there remain some imbalances. We would handle missing or inconsistent values (ex, insulin level = 0, which may indicate missing data rather than actual measurement). Finally, we would normalize or standardize features where necessary.
+3. **Label Encoding**: Ensure the target variable (diabetes diagnosis) is consistently represented as a 3-class label.
+4. **Train-Test Splitting**: Partition the datasets into training and testing subsets to evaluate generalization.
 
 ### Justification of Choice
-Using established and openly available datasets offers numerous advantages:
-- **Reproducibility**: Both PID and BRFSS-derived datasets are widely studied in academic and ML contexts, allowing comparison with prior results.
-- **Ethical Compliance**: The datasets come de-identified, avoiding privacy concerns that would arise with collecting new patient data.
+Using the established and openly available BRFSS dataset offers numerous advantages:
+- **Reproducibility**: The BRFSS dataset is widely studied in academic and ML contexts, allowing comparison with prior results.
+- **Ethical Compliance**: The dataset comes de-identified, avoiding privacy concerns that would arise with collecting new patient data.
 - **Practical feasibility**: Collecting new clinical data would require significant resources and patient recruitment, which is not feasible in the scope of this course project.
 
 
+## Modeling Plan
+
+Our modeling strategy will employ various supervised machine learning methods, where the focus is to compare a wide range of supervised classification algorithms and identify which model best predicts diabetes status from the BRFSS dataset.
+
+### Baseline Models
+
+We will begin with simpler models to establish a baseline:
+
+- **Multi-Nomial Logistic Regression**
+- **Naïve Bayes Classifier**
+- **k-Nearest Neighbors (kNN)**
+- **Decision Trees**
+
+### Advanced Models
+
+To capture non-linear interactions and complex dependencies in the data, we will then implement ensemble and boosting methods:
+
+- **Random Forests**
+- **Gradient Boosting Models (XGBoost, LightGBM, CatBoost)**
+
+We speculate that gradient boosting methods will outperform other approaches because of their ability to handle large, tabular, imbalanced datasets while capturing higher-order feature interactions.  
+
+### Model Evaluation
+
+- All models will be trained on the **training set** and evaluated on the **test set**.  
+- Performance will be compared using:  
+  - **Confusion matrix** (to observe misclassification patterns)  
+  - **Precision, Recall, and F1 Score** (to balance false positives and false negatives)  
+  - **ROC-AUC** (to assess discrimination capability) 
+- Among these, the **F1 Score** will serve as our primary metric since diabetes prediction is a class-imbalanced problem where both false negatives and false positives carry real-world significance.
+
+### Loss Function
+
+For the proposed classification task, we believe that using **categorical cross-entropy (log loss)** would be ideal, since it penalizes incorrect classifications with stronger weights as prediction confidence increases. To further address imbalance, we will also use **weighted cross-entropy loss**, where positive and negative classes are assigned different weights based on prevalence. This will ensure that underrepresented classes are not overlooked by the models.
 
 
 ## Visualization Plan
 
-Visualizations will include both result presentation and primary exploratory data analysis. Since the BRFSS dataset contains health and lifestyle traits for over 200,000 individuals in the U.S., we will use plots to 
+Visualizations will include both result presentation and primary exploratory data analysis. Since the BRFSS dataset contains health and lifestyle traits for over 400,000 individuals in the U.S., we will use plots to 
 (1) understand the distribution of the data and 
 (2) visualize how well the model performs
 
@@ -101,5 +143,5 @@ Collectively, these plots will deliver:
 
 To ensure reliable model evaluation and prevent overfitting, we will follow a systematic testing strategy.
 
-We plan to divide the data into a **training set (80% ~ 160,000 observations)** which will be used for model fitting and hyperparameter tuning, and a **test set (20% ~ 40,000 observations)** which will be used to evaluate the generalization ability of the final model.
-The 80/20 split is chosen as it provides enough data for the models to be able to find complex patterns, and still retains a very large, statistically significant remainder for us to use as a test set. With over 200,000 individuals in BRFSS, even 20% makes for a robust test set.
+We plan to divide the data into a **training set (80% ~ 360,000 observations)** which will be used for model fitting and hyperparameter tuning, and a **test set (20% ~ 90,000 observations)** which will be used to evaluate the generalization ability of the final model.
+The 80/20 split is chosen as it provides enough data for the models to be able to find complex patterns, and still retains a very large, statistically significant remainder for us to use as a test set. With over 400,000 individuals in BRFSS, even 20% makes for a robust test set.
