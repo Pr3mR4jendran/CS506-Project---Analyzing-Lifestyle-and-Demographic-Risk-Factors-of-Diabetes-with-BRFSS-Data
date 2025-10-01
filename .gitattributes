@@ -1,0 +1,2 @@
+Data/BRFSS_2024.csv filter=lfs diff=lfs merge=lfs -text
+Data/LLCP2024.ASC filter=lfs diff=lfs merge=lfs -text
