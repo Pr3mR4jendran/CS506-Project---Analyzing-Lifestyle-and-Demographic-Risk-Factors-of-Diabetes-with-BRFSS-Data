@@ -158,18 +158,12 @@ Visualizations will include both result presentation and primary exploratory dat
 
 ### Result Visualizations (after modeling)
 
-1. **PCA or t-SNE Scatterplot (Unsupervised Learning):**
-- Purpose: visualize whether lifestyle and demographic characteristics tend to cluster naturally according to diabetes outcomes.
-- These would allow dimensionality reduction of the data to 2D.
-- The plots could essentially have two panels: one colored by actual diabetes labels and one colored by unsupervised groups (e.g., KMeans with k=3).
-- This would reflect on novel relational patterns between different dataset attributes
-
-2. **Confusion Matrix Heatmap (Supervised Learning):**
+1. **Confusion Matrix Heatmap:**
 - Purpose: show which categories the classifier performs well on, and which it gets confused between (e.g., Prediabetes vs. Diabetes).
 - In this matrix, the rows will be true classes and the columns will be predicted classes.
 - Following that, the normalized values will be displayed as a heatmap for readability.
 
-3. **ROC Curves / Precision-Recall Curves (Supervised Learning):**
+2. **ROC Curves / Precision-Recall Curves:**
 - Purpose: test model discrimination capacity, especially for imbalanced classes.
 - This would include one curve per category of diabetes using a One-vs-Rest approach.
 - It will demonstrate how well biological risk factors enable discrimination between healthy, prediabetic, and diabetic states.
@@ -179,7 +173,6 @@ Visualizations will include both result presentation and primary exploratory dat
 Collectively, these plots will deliver:
 - A clear view of geographic, demographic, and lifestyle trends in the BRFSS dataset.
 - Intuitive representations of model performance (confusion matrix, ROC/PR).
-- Uncover the underlying data structure with unsupervised methods (PCA/t-SNE).
 
 
 ## Test Plan
