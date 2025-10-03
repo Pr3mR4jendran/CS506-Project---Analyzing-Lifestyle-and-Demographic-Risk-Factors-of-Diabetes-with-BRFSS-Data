@@ -52,6 +52,48 @@ Using the established and openly available BRFSS dataset offers numerous advanta
 - **Ethical Compliance**: The dataset comes de-identified, avoiding privacy concerns that would arise with collecting new patient data.
 - **Practical feasibility**: Collecting new clinical data would require significant resources and patient recruitment, which is not feasible in the scope of this course project.
 
+## Data Structure and Documentation
+
+### Overview
+
+- **Size**: ~475,000 survey responses (rows) across several hundred variables (columns)
+- **Unit of Observation**: Each row corresponds to one adult respondent interviewed via telephone
+- **Weighting**: Columns _LLCPWT (final weight) and _STRWT (stratum weight) ensure national representativeness.
+
+### Key Target Variable
+- DIABETE4 (Diabates Status)
+    - 1 = Yes (diagnosed with diabetes)
+    - 2 = Yes, but only during pregnancy (gestational)
+    - 3 = No
+    - 4 = No, pre-diabetes or borderline
+    - 7/9 = Don't know / Refused / Missing
+
+This will be our **outcome variable** for modelling/analysis.
+
+### Column Types (High-Level Categories)
+
+The variables are grouped into three types:
+  1. Demographics: age (AGE5YR), sex (SEXVAR), race/ethnicity (RACEGR3), education (EDUCA), income (INCOME2).
+  2. Health Behaviors & Risk Factors: smoking (SMOKE100), alcohol (ALCDAY5), exercise (EXERANY2), diet.
+  3. Health Outcomes & Access: BMI (BMI5), blood pressure (BPHIGH4), cholesterol (BLOODCHO), health insurance (HLTHPLN1), personal doctor (PERSDOC2)
+
+Each column in the codebook provides:
+- Variable name (used in the dataset).
+- Label/Question (survey wording).
+- Response codes (including missing categories like 7=Don’t know, 9=Refused).
+
+## Accessing the Data
+To fully work with the BRFSS dataset, the following files are needed:
+
+- Data File (LLCP2024.XPT) – contains the actual survey responses
+- Codebook (USCODE24_LLCP.html) – defines each variable and its coding
+- Overview (Overview_2024-508.pdf) – explains survey methodology, weighting, and design considerations
+
+These files together provide the raw data, variable definitions, and methodological context required for analysis.
+
+
+  
+
 
 ## Modeling Plan
 
