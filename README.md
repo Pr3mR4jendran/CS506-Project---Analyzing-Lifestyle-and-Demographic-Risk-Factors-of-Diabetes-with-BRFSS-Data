@@ -68,7 +68,7 @@ Using the established and openly available BRFSS dataset offers numerous advanta
     - 4 = No, pre-diabetes or borderline
     - 7/9 = Don't know / Refused / Missing
 
-This will be our **outcome variable** for modelling/analysis.
+This will be our outcome variable for modelling/analysis. Most reponses are concentrated towards classes 1, 3 and 4, with only 4,429 responses belonging to other classes. To align with the scope of our project, we will be dropping all responses that belong to classes 2, 7 and 9, along with all missing values. 
 
 ### Column Types (High-Level Categories)
 
@@ -85,14 +85,22 @@ Each column in the codebook provides:
 ## Accessing the Data
 To fully work with the BRFSS dataset, the following files are needed:
 
-- Data File (LLCP2024.XPT) – contains the actual survey responses
-- Codebook (USCODE24_LLCP.html) – defines each variable and its coding
-- Overview (Overview_2024-508.pdf) – explains survey methodology, weighting, and design considerations
+- Data File (LLCP2024.ASC) – The main data file in ASCII format containing all survey responses for 2024. Each line represents one respondent, and each column corresponds to a survey variable.
+- Codebook (USCODE24_LLCP_082125.html) – The variable codebook that defines each column in the dataset, including question wording, value labels, and missing code definitions.  
 
-These files together provide the raw data, variable definitions, and methodological context required for analysis.
+Using these files, the provided Jupyter notebook (BRFSS-2024-Extraction.ipynb) contains code to extract the raw survey data from the ASCII file and process it into an easily readable .csv format for easier viewing and future imports for model training. This .csv file will now serve as our starting point for data cleaning and analysis.   
 
+## Feature Selection and Extraction Plan
+Given that the BRFSS dataset contains hundreds of variables, not all features will be relevant for predicting diabetes. We will focus on variables that are either directly or indirectly associated with metabolic health and lifestyle behavior.
 
-  
+### Feature Selection
+1. **Manual Filtering:** Based on the BRFSS codebook, we will first identify the variables that are theoretically linked to diabetes risk (e.g., BMI, physical activity, smoking, age, income, education, blood pressure, cholesterol, and general health status). These features will be selected based on a literature review of scholarly research in the field of diabetes.
+2. **Missing Values:** Variables with excessive missing or refused responses (>30%) will be dropped.
+3. **Correlation Analysis and Chi Square Test:** We will use correlation matrices, ANOVA, and Chi Square Test to further refine the list of selected features.
+
+### Feature Encoding
+- **Categorical Variables:** One-hot encoding or ordinal encoding depending on the nature of the variable.
+- **Continuous Variables:** Standardization or normalization. 
 
 
 ## Modeling Plan
@@ -120,16 +128,19 @@ We speculate that gradient boosting methods will outperform other approaches bec
 
 ### Model Evaluation
 
-- All models will be trained on the **training set** and evaluated on the **test set**.  
+- All models will be trained on the training set and evaluated on the test set.  
 - Performance will be compared using:  
   - **Confusion matrix** (to observe misclassification patterns)  
   - **Precision, Recall, and F1 Score** (to balance false positives and false negatives)  
   - **ROC-AUC** (to assess discrimination capability) 
-- Among these, the **F1 Score** will serve as our primary metric since diabetes prediction is a class-imbalanced problem where both false negatives and false positives carry real-world significance.
+- Among these, the F1 Score will serve as our primary metric since diabetes prediction is a class-imbalanced problem where both false negatives and false positives carry real-world significance.
 
 ### Loss Function
 
-For the proposed classification task, we believe that using **categorical cross-entropy (log loss)** would be ideal, since it penalizes incorrect classifications with stronger weights as prediction confidence increases. To further address imbalance, we will also use **weighted cross-entropy loss**, where positive and negative classes are assigned different weights based on prevalence. This will ensure that underrepresented classes are not overlooked by the models.
+For the proposed classification task, we believe that using categorical cross-entropy (log loss) would be ideal, since it penalizes incorrect classifications with stronger weights as prediction confidence increases. To further address imbalance, we will also use weighted cross-entropy loss, where positive and negative classes are assigned different weights based on prevalence. This will ensure that underrepresented classes are not overlooked by the models.
+
+### Model Scope and Practical Constraints
+While several algorithms are listed, our focus will be on comparing a smaller subset of well-performing models after initial evaluation. We expect to prioritize models like Logistic Regression, Random Forest, and XGBoost based on baseline performance and interpretability. This will be clarified further once all baseline models are computed.
 
 
 ## Visualization Plan
@@ -179,5 +190,5 @@ Collectively, these plots will deliver:
 
 To ensure reliable model evaluation and prevent overfitting, we will follow a systematic testing strategy.
 
-We plan to divide the data into a **training set (80% ~ 360,000 observations)** which will be used for model fitting and hyperparameter tuning, and a **test set (20% ~ 90,000 observations)** which will be used to evaluate the generalization ability of the final model.
+We plan to divide the data into a training set (80% ~ 360,000 observations) which will be used for model fitting and hyperparameter tuning, and a test set (20% ~ 90,000 observations) which will be used to evaluate the generalization ability of the final model.
 The 80/20 split is chosen as it provides enough data for the models to be able to find complex patterns, and still retains a very large, statistically significant remainder for us to use as a test set. With over 400,000 individuals in BRFSS, even 20% makes for a robust test set.
