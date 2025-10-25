@@ -170,7 +170,7 @@ def run_experiments(
 
         all_results = pd.concat([pd.DataFrame(cat_results), pd.DataFrame(cont_results)], ignore_index=True)
         if all_results.empty:
-            print(f"⚠️ No valid features found for mrt={mrt}, tau={tau}. Skipping.")
+            print(f"No valid features found for mrt={mrt}, tau={tau}. Skipping.")
             continue
 
         all_results.dropna(inplace=True)
