@@ -201,7 +201,6 @@ def run_experiments(
                 penalty='l1',
                 solver='saga',
                 C=C,
-                multi_class='multinomial',
                 max_iter=5000,
                 random_state=42,
                 n_jobs=-1
@@ -241,8 +240,8 @@ def run_experiments(
 if __name__ == "__main__":
     run_experiments(
         csv_path="../Data/BRFSS_2024.csv",
-        mrt_values=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9], #tunable
-        tau_values=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9], #tunable
-        C_values=np.logspace(-3, 2, 10), #tunable
+        mrt_values=[0.20, 0.30, 0.40], #tunable
+        tau_values=[0.50, 0.60, 0.75], #tunable
+        C_values=[0.05, 0.20, 1.00], #tunable
         target="DIABETE4"
     )
