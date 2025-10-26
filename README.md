@@ -160,19 +160,20 @@ Visualizations will include both result presentation and primary exploratory dat
 
 ### Exploratory Data Visualizations (before modeling)
 
-1. **US Demographic Heat Map:**
-- Purpose: to highlight regional distribution of diabetes risk factors across the U.S.
-- This will include a choropleth map showing the prevalence (percentage of respondents within each category) of diabetes and prediabetes in U.S. states.
-- The visualization may reflect biological risk shaped by environmental, socioeconomic, and healthcare access factors.
+1. **Data Cleaning Assessment:**
+- Purpose: to measure the frequency and correlation of missing data, and learn the impact of preprocessing on dataset quality.
+- Heatmaps (missingness correlation before vs. after cleaning), Pie Charts (composition of valid vs. missing data), and a Bar Plot (feature retention count).
+- Interpretation: Cleaning reduced correlated missingness, validated responses from ~48% to 89%, and removed duplicate variables (301 → 79) to create a sound basis for modeling.
 
-2. **BMI and Age vs. Diabetes Status:**
-- Purpose: to examine how weight and age patterns differ by No Diabetes, Prediabetes, and Diabetes.
-- This will be represented by box and scatter plots of BMI and age groups by diabetes categories.
-
-3. **Lifestyle Factor Comparisons:**
-- Purpose: uncover behavioral risk factors that are potentially predictive of diabetes.
-- This will include grouped bar charts for smoking, physical activity, and heavy drinking by diabetes status.
-- The plots could depict how behaviors like smoking, inactivity, and heavy drinking exacerbate metabolic stress, accelerating progression from prediabetes to diabetes.
+2. **Target Exploration:**
+- Purpose: To examine the overall class distribution of diabetes-related responses and detect any imbalance.
+- A Categorical Bar Plot with percentages of respondents having and not having diabetes, including borderline/prediabetes.
+- Interpretation: The data showed a strong class imbalance, with most respondents reporting “No diabetes,” guiding later model balancing strategies.
+  
+3. **Demographic and Lifestyle Factors vs. Diabetes:**
+- Purpose: To explore the correlation between diabetes rate and behavioral and demographic characteristics.
+- A faceted bar plot grid compared diabetes status by factor such as age, race, income, education, employment, and healthcare access.
+- Interpretation: Stark demographic and socioeconomic disparities were observed — older individuals, lower-income groups, and those with poor healthcare access showed higher diabetes rate.
 
 
 ### Result Visualizations (after modeling)
