@@ -178,7 +178,7 @@ Visualizations will include both result presentation and primary exploratory dat
 1. **Data Cleaning Assessment:**
 - Purpose: to measure the frequency and correlation of missing data, and learn the impact of preprocessing on dataset quality.
 - Heatmaps (missingness correlation before vs. after cleaning), Pie Charts (composition of valid vs. missing data), and a Bar Plot (feature retention count).
-- Interpretation: Cleaning reduced correlated missingness, validated responses from ~48% to 89%, and removed duplicate variables to create a sound basis for modeling.
+- Interpretation: Cleaning reduced correlated missingness, validated responses from ~48% to 89%, and removed duplicate variables (301 → 79) to create a sound basis for modeling.
 
 2. **Target Exploration:**
 - Purpose: To examine the overall class distribution of diabetes-related responses and detect any imbalance.
