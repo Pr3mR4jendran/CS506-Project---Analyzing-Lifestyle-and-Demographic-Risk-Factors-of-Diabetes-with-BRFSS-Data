@@ -113,22 +113,36 @@ All steps were implemented and documented in the Data_Cleaning_Feature_Extractio
 
 ## Modeling Plan
 
-Our modeling strategy will employ various supervised machine learning methods, where the focus is to compare a wide range of supervised classification algorithms and identify which model best predicts diabetes status from the BRFSS dataset.
+Our modeling strategy employed various supervised machine learning methods, where the focus is to compare a wide range of supervised classification algorithms and identify which model best predicts diabetes status from the BRFSS dataset.
 
 ### Baseline Models
 
-We will begin with simpler models to establish a baseline:
+We began with four baseline classifiers to establish performance benchmarks:
 
 - **Multi-Nomial Logistic Regression**
 - **Naïve Bayes Classifier**
 - **k-Nearest Neighbors (kNN)**
 - **Decision Trees**
-- **Support Vector Machines (SVM)**
+
+Each model was trained on the same training–testing split and evaluated using multiple metrics to ensure comparability.
+
+| Model                | Accuracy  | Precision (Macro) | Recall (Macro)  | F1 Score (Macro) | Log Loss |
+|----------------------|-----------|------------------:|----------------:|-----------------:|---------:|
+| Naïve Bayes          | 0.6864    | 0.4199            | 0.4714          | 0.4234           | 6.0492   |
+| Decision Tree        | 0.7528    | 0.4029            | 0.4077          | 0.4050           | 8.9086   |
+| kNN (Euclidean)      | 0.8301    | 0.4851            | 0.3343          | 0.3044           | 0.4567   |
+| kNN (Manhattan)      | 0.8307    | 0.5165            | 0.3361          | 0.3082           | 0.4520   |
+| Logistic Regression  | 0.8360    | 0.4637            | 0.3876          | 0.3961           | 0.4329   |
+
+Naïve Bayes achieved modest performance (accuracy = 0.69) but exhibited high bias toward the majority class (label 3). While simple and computationally efficient, it failed to capture complex dependencies between features. Decision Tree improved accuracy (0.75) but still struggled with minority classes, often overfitting to dominant patterns. kNN (Euclidean and Manhattan) achieved strong overall accuracy (~0.83) but severely underperformed on minority classes, with near-zero recall for class 1 and 4. This suggests strong class imbalance effects, where the majority class dominates nearest-neighbor voting. Logistic Regression produced the highest overall performance among baseline models, with accuracy = 0.8360 and the lowest log loss = 0.4329. Although minority-class recall remained low, the model balanced interpretability, stability, and probabilistic calibration better than other baselines.
+
+Across all models, the dominance of class 3 (non-diabetic) in the dataset led to skewed predictions and poor detection of diabetic (class 1) and borderline (class 4) cases. We plan to explicitly handle class imbalance using oversampling or undersampling methods.
 
 ### Advanced Models
 
-To capture non-linear interactions and complex dependencies in the data, we will then implement ensemble and boosting methods:
+To capture non-linear interactions, complex dependencies and address the imbalance problem in the data, the next phase will focus on ensemble and boosting methods:
 
+- **Support Vector Machines (SVM)**
 - **Random Forests**
 - **Gradient Boosting Models (XGBoost, LightGBM, CatBoost)**
 
@@ -136,19 +150,20 @@ We speculate that gradient boosting methods will outperform other approaches bec
 
 ### Model Evaluation
 
-- All models will be trained on the training set and evaluated on the test set.  
+- All models were trained on the training set and evaluated on the test set.  
 - Performance will be compared using:  
   - **Confusion matrix** (to observe misclassification patterns)  
   - **Precision, Recall, and F1 Score** (to balance false positives and false negatives)  
   - **ROC-AUC** (to assess discrimination capability) 
-- Among these, the F1 Score will serve as our primary metric since diabetes prediction is a class-imbalanced problem where both false negatives and false positives carry real-world significance.
+  - **Log-Loss** (to measure probabilistic calibration)
+- Among these, the F1 Score remains the primary comparison metric, given the imbalanced nature of the dataset and the clinical significance of both false positives and false negatives.
 
 ### Loss Function
 
-For the proposed classification task, we believe that using categorical cross-entropy (log loss) would be ideal, since it penalizes incorrect classifications with stronger weights as prediction confidence increases. To further address imbalance, we will also use weighted cross-entropy loss, where positive and negative classes are assigned different weights based on prevalence. This will ensure that underrepresented classes are not overlooked by the models.
+For this classification task, categorical cross-entropy (log-loss) is the most suitable objective, as it heavily penalizes incorrect high-confidence predictions. To further mitigate class imbalance, future models will use weighted cross-entropy, assigning higher penalties to underrepresented classes based on class frequencies.
 
 ### Model Scope and Practical Constraints
-While several algorithms are listed, our focus will be on comparing a smaller subset of well-performing models after initial evaluation. We expect to prioritize models like Logistic Regression, Random Forest, and XGBoost based on baseline performance and interpretability. This will be clarified further once all baseline models are computed.
+While several algorithms are under consideration, the modeling effort will prioritize models that balance performance, interpretability, and scalability. Based on the current baseline outcomes, Logistic Regression, Random Forest, and XGBoost will be the primary focus of the next stage. These models will serve as the foundation for optimization through hyperparameter tuning, class reweighting, and feature importance analysis.
 
 
 ## Visualization Plan
