@@ -12,6 +12,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import f1_score
 
 def load_brfss(csv_path: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path, low_memory=False)
@@ -118,7 +119,7 @@ def run_experiments(
 
     with open(output_csv, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["timestamp", "mrt", "tau", "best_C", "val_accuracy", "features_kept"])
+        writer.writerow(["timestamp", "mrt", "tau", "best_C", "val_f1", "features_kept"])
 
     for mrt, tau in product(mrt_values, tau_values):
         print(f"\n=== Running Experiment (mrt={mrt}, tau={tau}) ===")
@@ -203,31 +204,33 @@ def run_experiments(
                 C=C,
                 max_iter=5000,
                 random_state=42,
+                class_weight='balanced',
                 n_jobs=-1
             )
             model.fit(X_train, y_train)
-            score = model.score(X_val, y_val)
-            val_scores.append(score)
+            preds = model.predict(X_val)
+            f1 = f1_score(y_val, preds, average="macro")
+            val_scores.append(f1)
             n_nonzero = np.sum(model.coef_ != 0)
             nonzero_counts.append(n_nonzero)
 
         best_idx = np.argmax(val_scores)
         best_C = C_values[best_idx]
-        best_acc = val_scores[best_idx]
+        best_f1 = val_scores[best_idx]
         best_features = nonzero_counts[best_idx]
 
-        print(f"mrt={mrt}, tau={tau} → Best C={best_C:.4f} | Val Acc={best_acc:.4f} | Features={best_features}")
+        print(f"mrt={mrt}, tau={tau} → Best C={best_C:.4f} | Val macro-F1={best_f1:.4f} | Features={best_features}")
 
         with open(output_csv, "a", newline="") as f:
             writer = csv.writer(f)
             writer.writerow([
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                mrt, tau, best_C, round(best_acc, 4), best_features
+                mrt, tau, best_C, round(best_f1, 4), best_features
             ])
 
     print(f"\nAll experiments completed. Results saved to '{output_csv}'.")
     df_results = pd.read_csv(output_csv)
-    best_row = df_results.loc[df_results["val_accuracy"].idxmax()]
+    best_row = df_results.loc[df_results["val_f1"].idxmax()]
     print("\nBest Configuration Found:")
     print(best_row)
 
