@@ -1,0 +1,1 @@
+This folder contains the data and codebook from the BRFSS 2024 dataset, and will also contain all cleaned data from the data cleaning pipeline. 
