@@ -110,7 +110,7 @@ def run_experiments(
     target="DIABETE4",
     valid_classes={1, 3, 4},
     n_min_features=50,
-    output_csv="../../Results/experiment_log.csv"
+    output_csv="../../Results/Data Cleaning Logs/experiment_log.csv"
 ):
     df = load_brfss(csv_path)
     df[target] = pd.to_numeric(df[target], errors="coerce")
@@ -234,7 +234,7 @@ def run_experiments(
     print("\nBest Configuration Found:")
     print(best_row)
 
-    with open("../../Results/best_config.txt", "w") as f:
+    with open("../../Results/Data Cleaning Logs/best_config.txt", "w") as f:
         f.write(best_row.to_string(index=False))
 
     print("\nBest config saved to 'best_config.txt'")
