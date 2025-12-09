@@ -130,7 +130,7 @@ Each model was trained on the same training–testing split and evaluated using 
 | Model                | Accuracy  | Precision (Macro) | Recall (Macro)  | F1 Score (Macro) | Log Loss |
 |----------------------|-----------|------------------:|----------------:|-----------------:|---------:|
 | Naïve Bayes          | 0.4594    | 0.4129            | 0.4754          | 0.3420           | 8.1898   |
-| Decision Tree        | 0.7772    | 0.4087            | 0.4072          | 0.4057           | 8.9086   | x
+| Decision Tree        | 0.7772    | 0.4087            | 0.4072          | 0.4057           | NA       | 
 | kNN (Euclidean)      | 0.3921    | 0.4223            | 0.4706          | 0.3142           | 1.1728   |
 | kNN (Manhattan)      | 0.6171    | 0.4270            | 0.4999          | 0.4103           | 0.8575   |
 | Logistic Regression  | 0.6043    | 0.4395            | 0.5303          | 0.4160           | 0.9061   |
