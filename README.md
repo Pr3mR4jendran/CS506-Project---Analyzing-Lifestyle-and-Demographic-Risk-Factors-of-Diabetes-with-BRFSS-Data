@@ -112,6 +112,30 @@ Given that the BRFSS dataset contained hundreds of variables, not all features w
 
 All steps were implemented and documented in the Data_Cleaning_Feature_Extraction.ipynb notebook under data-cleaning directory.
 
+## Pre-liminary Visualizations
+
+### Demographics vs Diabetes
+<img width="5366" height="3787" alt="demographics_vs_diabetes" src="https://github.com/user-attachments/assets/a25151e3-e4be-429d-8506-19601878461d" />
+
+### Diabetes Distribution Plot
+<img width="2322" height="1429" alt="diabetes_distribution_plot" src="https://github.com/user-attachments/assets/f6dfd004-d8de-4139-9b68-ac94c402c5b9" />
+
+### Feature Retention Bar Graph
+<img width="2031" height="1900" alt="feature_retention_bar" src="https://github.com/user-attachments/assets/a0db6575-6a66-4624-8153-83eedb2cb290" />
+
+### Health vs Diabetes Bar Graph
+<img width="6075" height="4714" alt="health_vs_diabetes" src="https://github.com/user-attachments/assets/1cd68265-9bdf-4356-8e83-b13d0de2f65d" />
+
+### Missing Value Correlation Heatmaps
+<img width="4255" height="2234" alt="missing-value_correlation_heatmap" src="https://github.com/user-attachments/assets/0c8000a0-eb76-4bd5-96d0-957c098a8bae" />
+
+### Missingness Pie Charts
+<img width="4332" height="2600" alt="missingness_pie_chart" src="https://github.com/user-attachments/assets/4d2fa042-6e5e-4e31-8a70-96aaf9974858" />
+
+### Health & Behaviors Radar Chart
+<img width="3036" height="2402" alt="radar_chart" src="https://github.com/user-attachments/assets/cb121ac6-fea3-454a-9b01-d3740053f4d4" />
+
+
 ## Modeling 
 
 Our modeling strategy employed various supervised machine learning methods, where the focus is to compare a wide range of supervised classification algorithms and identify which model best predicts diabetes status from the BRFSS dataset.
