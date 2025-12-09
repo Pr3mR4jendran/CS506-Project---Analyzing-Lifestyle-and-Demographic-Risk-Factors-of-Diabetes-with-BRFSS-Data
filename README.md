@@ -152,7 +152,7 @@ We speculate that gradient boosting methods will outperform other approaches bec
 | Model                | Accuracy  | Precision (Macro) | Recall (Macro)  | F1 Score (Macro) | Log Loss |
 |----------------------|-----------|------------------:|----------------:|-----------------:|---------:|
 | Random Forest        | 0.8364    | 0.4683            | 0.3806          | 0.3869           | 0.4508   |
-| SVM                  | 0.6171    | 0.4390            | 0.5309          | 0.4203           | 8.9086   | 
+| SVM                  | 0.6171    | 0.4390            | 0.5309          | 0.4203           | NA       | 
 | XGBoost              | 0.8320    | 0.4879            | 0.3995          | 0.4096           | 0.4458   |
 
 
