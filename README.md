@@ -22,9 +22,9 @@ By working with this dataset, we will go through the full data science pipeline:
 - Testing performance
 
 
-## Data Collection Plan 
+## Data Collection 
 
-### Type of Data Needed
+### Type of Data 
 Our project used the structured, tabular health data that includes both metabolic and demographic features. Specifically, the following categories of data were used:
 - **Metabolic features**: plasma glucose concentration, blood pressure, skinfold thickness, insulin levels, and body mass index (BMI).
 - **Demographic features**: age, number of pregnancies, and diabetes pedigree function (a measure of family history risk).
@@ -47,7 +47,7 @@ Since these datasets are publicly available and de-identified, our collection me
 3. **Label Encoding**: Ensure the target variable (diabetes diagnosis) is consistently represented as a 3-class label.
 4. **Train-Test Splitting**: Partition the datasets into training and testing subsets to evaluate generalization.
 
-### Justification of Choice
+### Rationale
 Using the established and openly available BRFSS dataset offers numerous advantages:
 - **Reproducibility**: The BRFSS dataset is widely studied in academic and ML contexts, allowing comparison with prior results.
 - **Ethical Compliance**: The dataset comes de-identified, avoiding privacy concerns that would arise with collecting new patient data.
@@ -91,7 +91,7 @@ To fully work with the BRFSS dataset, the following files were needed:
 
 Using these files, the provided Jupyter notebook (BRFSS-2024-Extraction.ipynb) contains code to extract the raw survey data from the ASCII file and process it into an easily readable .csv format for easier viewing and future imports for model training. This .csv file then served as our starting point for data cleaning and analysis.   
 
-## Feature Selection and Extraction Plan
+## Feature Selection and Extraction 
 Given that the BRFSS dataset contained hundreds of variables, not all features were relevant for predicting diabetes. We focused on variables that were either directly or indirectly associated with metabolic health and lifestyle behavior.
 
 ### Feature Selection
@@ -112,11 +112,11 @@ Given that the BRFSS dataset contained hundreds of variables, not all features w
 
 All steps were implemented and documented in the Data_Cleaning_Feature_Extraction.ipynb notebook under data-cleaning directory.
 
-## Modeling Plan
+## Modeling 
 
 Our modeling strategy employed various supervised machine learning methods, where the focus is to compare a wide range of supervised classification algorithms and identify which model best predicts diabetes status from the BRFSS dataset.
 
-### Baseline Models
+### Tuned Models
 
 We began with four baseline classifiers to establish performance benchmarks:
 
@@ -125,15 +125,15 @@ We began with four baseline classifiers to establish performance benchmarks:
 - **k-Nearest Neighbors (kNN)**
 - **Decision Trees**
 
-Each model was trained on the same training–testing split and evaluated using multiple metrics to ensure comparability.
+Each model was trained on the same training–testing split and evaluated using multiple metrics to ensure comparability. Then we tuned each model, whose results are shown below. 
 
 | Model                | Accuracy  | Precision (Macro) | Recall (Macro)  | F1 Score (Macro) | Log Loss |
 |----------------------|-----------|------------------:|----------------:|-----------------:|---------:|
-| Naïve Bayes          | 0.6864    | 0.4199            | 0.4714          | 0.4234           | 6.0492   |
-| Decision Tree        | 0.7528    | 0.4029            | 0.4077          | 0.4050           | 8.9086   |
-| kNN (Euclidean)      | 0.8301    | 0.4851            | 0.3343          | 0.3044           | 0.4567   |
-| kNN (Manhattan)      | 0.8307    | 0.5165            | 0.3361          | 0.3082           | 0.4520   |
-| Logistic Regression  | 0.8360    | 0.4637            | 0.3876          | 0.3961           | 0.4329   |
+| Naïve Bayes          | 0.4594    | 0.4129            | 0.4754          | 0.3420           | 8.1898   |
+| Decision Tree        | 0.7772    | 0.4087            | 0.4072          | 0.4057           | 8.9086   | x
+| kNN (Euclidean)      | 0.3921    | 0.4223            | 0.4706          | 0.3142           | 1.1728   |
+| kNN (Manhattan)      | 0.6171    | 0.4270            | 0.4999          | 0.4103           | 0.8575   |
+| Logistic Regression  | 0.6043    | 0.4395            | 0.5303          | 0.4160           | 0.9061   |
 
 Naïve Bayes achieved modest performance (accuracy = 0.69) but exhibited high bias toward the majority class (label 3). While simple and computationally efficient, it failed to capture complex dependencies between features. Decision Tree improved accuracy (0.75) but still struggled with minority classes, often overfitting to dominant patterns. kNN (Euclidean and Manhattan) achieved strong overall accuracy (~0.83) but severely underperformed on minority classes, with near-zero recall for class 1 and 4. This suggests strong class imbalance effects, where the majority class dominates nearest-neighbor voting. Logistic Regression produced the highest overall performance among baseline models, with accuracy = 0.8360 and the lowest log loss = 0.4329. Although minority-class recall remained low, the model balanced interpretability, stability, and probabilistic calibration better than other baselines.
 
@@ -149,6 +149,13 @@ To capture non-linear interactions, complex dependencies and address the imbalan
 
 We speculate that gradient boosting methods will outperform other approaches because of their ability to handle large, tabular, imbalanced datasets while capturing higher-order feature interactions.  
 
+| Model                | Accuracy  | Precision (Macro) | Recall (Macro)  | F1 Score (Macro) | Log Loss |
+|----------------------|-----------|------------------:|----------------:|-----------------:|---------:|
+| Random Forest        | 0.8364    | 0.4683            | 0.3806          | 0.3869           | 0.4508   |
+| SVM                  | 0.6171    | 0.4390            | 0.5309          | 0.4203           | 8.9086   | 
+| XGBoost              | 0.8320    | 0.4879            | 0.3995          | 0.4096           | 0.4458   |
+
+
 ### Model Evaluation
 
 - All models were trained on the training set and evaluated on the test set.  
@@ -163,11 +170,16 @@ We speculate that gradient boosting methods will outperform other approaches bec
 
 For this classification task, categorical cross-entropy (log-loss) is the most suitable objective, as it heavily penalizes incorrect high-confidence predictions. To further mitigate class imbalance, future models will use weighted cross-entropy, assigning higher penalties to underrepresented classes based on class frequencies.
 
-### Model Scope and Practical Constraints
-While several algorithms are under consideration, the modeling effort will prioritize models that balance performance, interpretability, and scalability. Based on the current baseline outcomes, Logistic Regression, Random Forest, and XGBoost will be the primary focus of the next stage. These models will serve as the foundation for optimization through hyperparameter tuning, class reweighting, and feature importance analysis.
+
+## Testing 
+
+To ensure reliable model evaluation and prevent overfitting, we will follow a systematic testing strategy.
+
+We plan to divide the data into a training set (80% ~ 360,000 observations) which will be used for model fitting and hyperparameter tuning, and a test set (20% ~ 90,000 observations) which will be used to evaluate the generalization ability of the final model.
+The 80/20 split is chosen as it provides enough data for the models to be able to find complex patterns, and still retains a very large, statistically significant remainder for us to use as a test set. With over 400,000 individuals in BRFSS, even 20% makes for a robust test set.
 
 
-## Visualization Plan
+## Visualization 
 
 Visualizations will include both result presentation and primary exploratory data analysis. Since the BRFSS dataset contains health and lifestyle traits for over 400,000 individuals in the U.S., we will use plots to 
 (1) understand the distribution of the data and 
@@ -209,11 +221,3 @@ Visualizations will include both result presentation and primary exploratory dat
 Collectively, these plots will deliver:
 - A clear view of geographic, demographic, and lifestyle trends in the BRFSS dataset.
 - Intuitive representations of model performance (confusion matrix, ROC/PR).
-
-
-## Test Plan
-
-To ensure reliable model evaluation and prevent overfitting, we will follow a systematic testing strategy.
-
-We plan to divide the data into a training set (80% ~ 360,000 observations) which will be used for model fitting and hyperparameter tuning, and a test set (20% ~ 90,000 observations) which will be used to evaluate the generalization ability of the final model.
-The 80/20 split is chosen as it provides enough data for the models to be able to find complex patterns, and still retains a very large, statistically significant remainder for us to use as a test set. With over 400,000 individuals in BRFSS, even 20% makes for a robust test set.
