@@ -41,7 +41,8 @@ Final Report YouTube Video:
    - Run `Code/data-cleaning/Data_Cleaning_Feature_Extraction.ipynb` to perform data cleaning and feature extraction.
    - To explore different values of `mrt`, `tau`, and `C`, edit the hyperparameter grid in `Code/data-cleaning/hyperparam_tuning.py` and run:
         `python Code/data-cleaning/hyperparam_tuning.py`
-     **Note:** this grid search is computationally expensive and may take a long time.
+   
+   **Note:** this grid search is computationally expensive and may take a long time.
 
 4. **Reproduce model results**  
    Run each notebook in `Code/models/` to train and evaluate the models. These notebooks will reproduce the metrics and artifacts reported in the project.
