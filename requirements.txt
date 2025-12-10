@@ -1,0 +1,15 @@
+numpy
+pandas
+matplotlib
+scipy
+scikit-learn
+imbalanced-learn
+xgboost
+gdown
+missingno
+plotly
+shap
+seaborn
+hyperopt
+jupyter
+ipykernel

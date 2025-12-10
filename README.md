@@ -7,7 +7,48 @@
 - Saneeya Vichare (U75237907)
 - Sara Alsowaimel (U86273437)
 
-Midterm Report Youtube Video: https://youtu.be/Qgp6xDooT5o
+Midterm Report YouTube Video: https://youtu.be/Qgp6xDooT5o
+Final Report YouTube Video:
+
+
+## Getting Started
+
+### Project Structure
+- `Code/`
+  - `data-extraction/`: scripts and notebooks to pull and preprocess BRFSS 2024 data  
+    - `download_gdrive_folder.py` – downloads all required project data from Google Drive  
+    - `BRFSS-2024-Extraction.ipynb` – optional re-extraction from the raw ASCII files
+  - `data-cleaning/`: data cleaning, feature engineering, and hyperparameter tuning  
+    - `Data_Cleaning_Feature_Extraction.ipynb` – main data cleaning + feature extraction pipeline  
+    - `hyperparam_tuning.py` – grid search over Missing Rate Threshold (`mrt`), statistical importance threshold (`tau`), and L1 regularization strength (`C`)
+  - `models/`: notebooks to train and evaluate all model variants
+  - `data-visualization/`: notebooks to generate all figures and visual summaries
+- `Data/`: raw and processed datasets (populated by the extraction and download scripts)
+- `Results/`: saved model outputs, metrics, and visualizations
+- `Makefile`: installs dependencies and downloads required data
+- `requirements.txt`: Python dependencies for the project
+
+### Reproducing the Pipeline
+1. **Install dependencies & download data**  
+   From the project root, run:
+      `make`
+   This installs all packages from `requirements.txt` and downloads the required data via `Code/data-extraction/download_gdrive_folder.py`.
+
+2. **(Optional) Re-extract BRFSS 2024 from raw ASCII**  
+   Open and run `Code/data-extraction/BRFSS-2024-Extraction.ipynb` to regenerate the processed datasets from the original ASCII files.
+
+3. **(Optional) Re-run data cleaning & feature extraction**
+   - Run `Code/data-cleaning/Data_Cleaning_Feature_Extraction.ipynb` to perform data cleaning and feature extraction.
+   - To explore different values of `mrt`, `tau`, and `C`, edit the hyperparameter grid in `Code/data-cleaning/hyperparam_tuning.py` and run:
+        `python Code/data-cleaning/hyperparam_tuning.py`
+     **Note:** this grid search is computationally expensive and may take a long time.
+
+4. **Reproduce model results**  
+   Run each notebook in `Code/models/` to train and evaluate the models. These notebooks will reproduce the metrics and artifacts reported in the project.
+
+5. **Reproduce visualizations**  
+   Run each notebook in `Code/data-visualization/` to regenerate all plots and visual summaries used in the analysis.
+
 
 ## Description of the Project
 Our project focuses on predicting diabetes among the U.S. population using structured health and lifestyle data. The dataset we selected, the CDC Behavioral Risk Factor Surveillance System (BRFSS) Dataset, contains survey responses from hundreds of thousands of adults and includes features such as body mass index (BMI), physical activity, general health, and demographic traits.  
