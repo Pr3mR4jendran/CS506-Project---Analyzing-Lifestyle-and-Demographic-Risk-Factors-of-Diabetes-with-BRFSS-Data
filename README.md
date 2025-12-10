@@ -8,7 +8,20 @@
 - Sara Alsowaimel (U86273437)
 
 Midterm Report YouTube Video: https://youtu.be/Qgp6xDooT5o
+
 Final Report YouTube Video:
+
+## Description of the Project
+Our project focuses on predicting diabetes among the U.S. population using structured health and lifestyle data. The dataset we selected, the CDC Behavioral Risk Factor Surveillance System (BRFSS) Dataset, contains survey responses from hundreds of thousands of adults and includes features such as body mass index (BMI), physical activity, general health, and demographic traits.  
+
+Our goal was to use these features to train machine learning models that can predict whether an individual has diabetes or is pre-diabetic. This project also allowed us the opportunity to study which health indicators are most strongly associated with diabetes risk, and to explore how lifestyle and demographic factors contribute to outcomes.
+
+By working with this dataset, we went through the full data science pipeline:  
+- Cleaning and preparing the data  
+- Selecting and extracting features  
+- Training multiple models  
+- Visualizing results  
+- Testing performance
 
 
 ## Getting Started
@@ -45,34 +58,21 @@ Final Report YouTube Video:
    **Note:** this grid search is computationally expensive and may take a long time.
 
 4. **Reproduce model results**  
-   Run each notebook in `Code/models/` to train and evaluate the models. These notebooks will reproduce the metrics and artifacts reported in the project.
+   Run each notebook in `Code/models/` to train and evaluate the models; these notebooks reproduce the metrics and artifacts reported in the project.
 
 5. **Reproduce visualizations**  
    Run each notebook in `Code/data-visualization/` to regenerate all plots and visual summaries used in the analysis.
 
 
-## Description of the Project
-Our project focuses on predicting diabetes among the U.S. population using structured health and lifestyle data. The dataset we selected, the CDC Behavioral Risk Factor Surveillance System (BRFSS) Dataset, contains survey responses from hundreds of thousands of adults and includes features such as body mass index (BMI), physical activity, general health, and demographic traits.  
-
-Our goal is to use these features to train machine learning models that can predict whether an individual has diabetes or is pre-diabetic. This project also gives us the opportunity to study which health indicators are most strongly associated with diabetes risk, and to explore how lifestyle and demographic factors contribute to outcomes.  
-
-By working with this dataset, we will go through the full data science pipeline:  
-- Cleaning and preparing the data  
-- Selecting and extracting features  
-- Training multiple models  
-- Visualizing results  
-- Testing performance
-
-
 ## Data Collection 
 
 ### Type of Data 
-Our project used the structured, tabular health data that includes both metabolic and demographic features. Specifically, the following categories of data were used:
-- **Metabolic features**: plasma glucose concentration, blood pressure, skinfold thickness, insulin levels, and body mass index (BMI).
-- **Demographic features**: age, number of pregnancies, and diabetes pedigree function (a measure of family history risk).
-- **Label**: a three class indicator of diabetes diagnosis, where the 3 classes are no diabetes, pre-diabetes, and diabetes.
+Our project used structured, tabular health survey data that included metabolic, lifestyle, and demographic features from the CDC BRFSS 2024 dataset. Examples include body mass index (BMI), self-reported general health, physical activity, smoking and alcohol use, blood pressure and cholesterol indicators, and demographic traits such as age, sex, race/ethnicity, education, and income.  
 
-This data will be used for supervised classification, where the goal is to predict whether an individual has diabetes or pre-diabetes given a set of health related features.
+- **Features**: metabolic, behavioral, and demographic variables derived from the BRFSS 2024 survey.  
+- **Label**: a three-class indicator of diabetes diagnosis, with the classes “no diabetes,” “pre-diabetes/borderline,” and “diabetes.”  
+
+This data was used for supervised multi-class classification, where the goal was to predict whether an individual had diabetes or pre-diabetes given their health and lifestyle traits.
 
 ### Chosen Dataset
 We relied on the CDC Behavioral Risk Factor Surveillance System (BRFSS) 2024 dataset, which is publicly available and fully de-identified. BRFSS is one of the largest continuously conducted health surveys in the world, with hundreds of thousands of U.S. adult respondents each year.  
@@ -85,7 +85,7 @@ By using the BRFSS 2024 dataset, we gained access to a large and diverse sample 
 Since these datasets are publicly available and de-identified, our collection method was limited to:
 
 1. **Dataset Access**: The dataset is publicly available in ASCII and SAS format on the [CDC website](https://www.cdc.gov/brfss/annual_data/annual_2024.html), along with a codebook that contains the schema of the dataset.
-2. **Data Cleaning**: The data was converted into a tabular .csv file in Python for easier import into Pandas. Although much of the data was clean, there remain some imbalances. We handled missing or inconsistent values (ex, insulin level = 0, which may indicated missing data rather than actual measurement). Finally, we normalized or standardized features where necessary.
+2. **Data Cleaning**: The data was converted into a tabular `.csv` file in Python for easier import into Pandas. Although much of the data was clean, there were still imbalances and inconsistencies. We handled missing or invalid values (for example, sentinel codes such as 7, 9, 77, or 99 that indicated non-response rather than valid measurements) and then normalized or standardized features where necessary.
 3. **Label Encoding**: Ensure the target variable (diabetes diagnosis) is consistently represented as a 3-class label.
 4. **Train-Test Splitting**: Partition the datasets into training and testing subsets to evaluate generalization.
 
@@ -141,7 +141,7 @@ Given that the BRFSS dataset contained hundreds of variables, not all features w
 2. **Missing Values:** We removed invalid or missing entries in the target variable (DIABETE4), and filtered to retain only valid classes (1 = diabetes, 3 = no diabetes, 4 = pre-diabetes). Coded missing values (such as 7, 9, 77, 99, etc.) were detected using regular expression matching and replaced with NaN. Variables with more than 30% missing data were dropped, resulting in 122 retained features.
 3. **Correlation Analysis and Chi Square Test:** To assess the correlations between each of the remaining variables and diabetes status (diabetes, pre-diabetes, and no diabetes), a range of statistical analyses were undertaken to assess the strength and significance of these correlations. Categorical variables were analyzed using Chi-Square tests, while continuous variables were tested using ANOVA and, where necessary, the Kruskal–Wallis test as a non-parametric alternative.
 
-    Those with a normalized importance value of 0.6 or higher (tau value of 0.6) are of high importance for modeling. A total of 78 values were found to be of high importance as a key predictor for diabetes diagnosis. The final cleaned dataset has a total of 453,241 rows and 79 columns (78 selected features plus the target variable). 
+    Those with a normalized importance value of 0.6 or higher (tau value of 0.6) are of high importance for modeling. A total of 78 values were found to be of high importance as a key predictor for diabetes diagnosis. The final cleaned dataset has a total of 453,241 rows and 79 columns (78 selected features plus the target variable).
 
 ### Feature Encoding
 - **Categorical Variables:** One-hot encoding and ordinal encoding techniques were used depending on the variables. Ordinal variables like educational level and general state of health of a person were assigned numerical values according to their order, while the non-ordinal categorical variables were one-hot encoded.
@@ -154,7 +154,7 @@ Given that the BRFSS dataset contained hundreds of variables, not all features w
 
 All steps were implemented and documented in the Data_Cleaning_Feature_Extraction.ipynb notebook under data-cleaning directory.
 
-## Pre-liminary Visualizations
+## Preliminary Visualizations
 
 ### Demographics vs Diabetes
 <img width="5366" height="3787" alt="demographics_vs_diabetes" src="https://github.com/user-attachments/assets/a25151e3-e4be-429d-8506-19601878461d" />
@@ -193,9 +193,30 @@ Across nearly every health domain, the diabetic group (red) shows higher rates o
 
 ## Modeling 
 
-Our modeling strategy employed various supervised machine learning methods, where the focus is to compare a wide range of supervised classification algorithms and identify which model best predicts diabetes status from the BRFSS dataset.
+Our modeling strategy employed various supervised machine learning methods, with the goal of comparing a wide range of classification algorithms and identifying which model best predicted diabetes status from the BRFSS dataset. To address the strong class imbalance, we combined class-weighted loss functions with ADASYN oversampling of the minority classes on the training data.
 
-### Tuned Models
+### Model Evaluation
+
+- All models were trained on the training set and evaluated on the test set.  
+- Performance was compared using:  
+  - **Confusion matrix** (to observe misclassification patterns)  
+  - **Precision, recall, and F1 score** (to balance false positives and false negatives)  
+  - **ROC-AUC** (to assess discrimination capability)  
+  - **Log-loss** (to measure probabilistic calibration)  
+- Among these, the macro F1 score was the primary comparison metric, given the imbalanced nature of the dataset and the clinical significance of both false positives and false negatives.  
+- To further mitigate class imbalance during training, we used class-weighted loss functions together with ADASYN oversampling on the training data to generate additional synthetic minority examples.
+
+### Loss Function
+
+For this classification task, categorical cross-entropy (log-loss) was the main objective, as it heavily penalized incorrect high-confidence predictions. To further mitigate class imbalance, we used weighted cross-entropy, assigning higher penalties to underrepresented classes based on class frequencies.
+
+### Testing 
+
+To ensure reliable model evaluation and prevent overfitting, we followed a systematic testing strategy.
+
+We divided the data into a training set (80% ~ 360,000 observations), which was used for model fitting and hyperparameter tuning, and a test set (20% ~ 90,000 observations), which was used to evaluate the generalization ability of the final models. The 80/20 split was chosen because it provided enough data for the models to learn complex patterns while still retaining a very large, statistically significant remainder to use as a test set. With over 400,000 individuals in BRFSS, even 20% made for a robust test set.
+
+### Baseline Models
 
 We began with four baseline classifiers to establish performance benchmarks:
 
@@ -209,60 +230,45 @@ Each model was trained on the same training–testing split and evaluated using 
 | Model                | Accuracy  | Precision (Macro) | Recall (Macro)  | F1 Score (Macro) | Log Loss |
 |----------------------|-----------|------------------:|----------------:|-----------------:|---------:|
 | Naïve Bayes          | 0.4594    | 0.4129            | 0.4754          | 0.3420           | 8.1898   |
-| Decision Tree        | 0.7772    | 0.4087            | 0.4072          | 0.4057           | NA       | 
+| Decision Tree        | 0.7772    | 0.4087            | 0.4072          | 0.4057           | -        | 
 | kNN (Euclidean)      | 0.3921    | 0.4223            | 0.4706          | 0.3142           | 1.1728   |
 | kNN (Manhattan)      | 0.6171    | 0.4270            | 0.4999          | 0.4103           | 0.8575   |
 | Logistic Regression  | 0.6043    | 0.4395            | 0.5303          | 0.4160           | 0.9061   |
 
-Naïve Bayes achieved modest performance (accuracy = 0.69) but exhibited high bias toward the majority class (label 3). While simple and computationally efficient, it failed to capture complex dependencies between features. Decision Tree improved accuracy (0.75) but still struggled with minority classes, often overfitting to dominant patterns. kNN (Euclidean and Manhattan) achieved strong overall accuracy (~0.83) but severely underperformed on minority classes, with near-zero recall for class 1 and 4. This suggests strong class imbalance effects, where the majority class dominates nearest-neighbor voting. Logistic Regression produced the highest overall performance among baseline models, with accuracy = 0.8360 and the lowest log loss = 0.4329. Although minority-class recall remained low, the model balanced interpretability, stability, and probabilistic calibration better than other baselines.
+Naïve Bayes achieved the weakest overall performance among the baselines, with low accuracy and macro F1 and a strong tendency to favor the majority class (label 3). Decision trees improved accuracy but still struggled on the minority classes and showed signs of overfitting. The two kNN variants showed that distance choice mattered: the Manhattan version achieved noticeably better accuracy and macro F1 than Euclidean distance, but both kNN models continued to misclassify many diabetic and pre-diabetic respondents. Logistic regression provided the best overall trade-off among the baseline models, with the strongest macro F1 and competitive log-loss while remaining relatively simple and interpretable.
 
-Across all models, the dominance of class 3 (non-diabetic) in the dataset led to skewed predictions and poor detection of diabetic (class 1) and borderline (class 4) cases. We plan to explicitly handle class imbalance using oversampling or undersampling methods.
+All baseline models were trained on a class-rebalanced training set constructed using ADASYN oversampling together with class-weighted loss, which substantially improved macro metrics compared to training on the raw imbalanced data (not shown here). However, the original dominance of class 3 (non-diabetic) still made the task challenging: even after oversampling, models generally achieved higher performance on the majority class than on the diabetic (class 1) and borderline (class 4) groups. This motivated the move to more expressive ensemble and boosting methods in the next stage of modeling, while retaining the same ADASYN-based class-balancing strategy.
 
 ### Advanced Models
 
-To capture non-linear interactions, complex dependencies and address the imbalance problem in the data, the next phase will focus on ensemble and boosting methods:
+To capture non-linear interactions, model complex dependencies, and better address class imbalance, the next phase focused on more expressive ensemble and boosting methods:
 
 - **Support Vector Machines (SVM)**
 - **Random Forests**
 - **Gradient Boosting Models (XGBoost, LightGBM, CatBoost)**
 
-We speculate that gradient boosting methods will outperform other approaches because of their ability to handle large, tabular, imbalanced datasets while capturing higher-order feature interactions.  
+Due to limited compute resources on the full BRFSS feature set, we restricted our SVM experiments to a linear kernel; RBF-kernel SVMs were prohibitively expensive to run at scale.
+
+We initially hypothesized that gradient boosting methods would outperform other approaches because of their ability to handle large, tabular, imbalanced datasets while capturing higher-order feature interactions.
 
 | Model                | Accuracy  | Precision (Macro) | Recall (Macro)  | F1 Score (Macro) | Log Loss |
 |----------------------|-----------|------------------:|----------------:|-----------------:|---------:|
 | Random Forest        | 0.8364    | 0.4683            | 0.3806          | 0.3869           | 0.4508   |
-| SVM                  | 0.6171    | 0.4390            | 0.5309          | 0.4203           | NA       | 
+| Linear SVM           | 0.6171    | 0.4390            | 0.5309          | 0.4203           | -        |
 | XGBoost              | 0.8320    | 0.4879            | 0.3995          | 0.4096           | 0.4458   |
 
+Random forest and XGBoost achieved the highest overall accuracies (around 0.83) and low log-loss values, confirming that tree-based ensembles captured substantial structure in the data. XGBoost slightly trailed random forest in accuracy but attained the best macro precision among the advanced models and a competitive macro F1, reflecting a somewhat better balance between majority and minority classes. The linear SVM, especially when combined with class weights and ADASYN oversampling, delivered the highest macro recall and F1 among the advanced models but at the cost of substantially lower overall accuracy, indicating that its linear decision boundary prioritized minority-class sensitivity over majority-class correctness.
 
-### Model Evaluation
+### Overall Modeling Results
 
-- All models were trained on the training set and evaluated on the test set.  
-- Performance will be compared using:  
-  - **Confusion matrix** (to observe misclassification patterns)  
-  - **Precision, Recall, and F1 Score** (to balance false positives and false negatives)  
-  - **ROC-AUC** (to assess discrimination capability) 
-  - **Log-Loss** (to measure probabilistic calibration)
-- Among these, the F1 Score remains the primary comparison metric, given the imbalanced nature of the dataset and the clinical significance of both false positives and false negatives.
-
-### Loss Function
-
-For this classification task, categorical cross-entropy (log-loss) is the most suitable objective, as it heavily penalizes incorrect high-confidence predictions. To further mitigate class imbalance, future models will use weighted cross-entropy, assigning higher penalties to underrepresented classes based on class frequencies.
-
-
-## Testing 
-
-To ensure reliable model evaluation and prevent overfitting, we will follow a systematic testing strategy.
-
-We plan to divide the data into a training set (80% ~ 360,000 observations) which will be used for model fitting and hyperparameter tuning, and a test set (20% ~ 90,000 observations) which will be used to evaluate the generalization ability of the final model.
-The 80/20 split is chosen as it provides enough data for the models to be able to find complex patterns, and still retains a very large, statistically significant remainder for us to use as a test set. With over 400,000 individuals in BRFSS, even 20% makes for a robust test set.
+Overall, logistic regression (with L1-based feature selection), the linear SVM, and XGBoost emerged as the most competitive models. Logistic regression and the linear SVM achieved the strongest macro recall and F1 scores when combined with class-weighted loss and ADASYN oversampling, making them the most sensitive to diabetic and pre-diabetic cases. Random forest and XGBoost delivered the highest overall accuracies (around 0.83) and the lowest log-loss values, offering better calibrated probabilities and stronger performance on the majority class. Taken together, these results suggest that XGBoost or random forest are reasonable choices when overall accuracy and probability estimates are prioritized, while logistic regression and the linear SVM are preferable when interpretability and minority-class detection are more important.
 
 
 ## Visualization 
 
-Visualizations will include both result presentation and primary exploratory data analysis. Since the BRFSS dataset contains health and lifestyle traits for over 400,000 individuals in the U.S., we will use plots to 
-(1) understand the distribution of the data and 
-(2) visualize how well the model performs
+Visualizations included both result presentation and primary exploratory data analysis. Since the BRFSS dataset contains health and lifestyle traits for over 400,000 individuals in the U.S., we used plots to  
+(1) understand the distribution of the data and  
+(2) visualize how well the models performed.
 
 
 ### Exploratory Data Visualizations (before modeling)
@@ -286,24 +292,39 @@ Visualizations will include both result presentation and primary exploratory dat
 ### Result Visualizations (after modeling)
 
 1. **Confusion Matrix Heatmap:**
-- Purpose: show which categories the classifier performs well on, and which it gets confused between (e.g., Prediabetes vs. Diabetes).
-- In this matrix, the rows will be true classes and the columns will be predicted classes.
-- Following that, the normalized values will be displayed as a heatmap for readability.
+- Purpose: to show which categories the classifier performed well on and which it confused (e.g., Prediabetes vs. Diabetes).
+- In this matrix, the rows were true classes and the columns were predicted classes.
+- The normalized values were displayed as a heatmap for readability.
 
 2. **ROC Curves / Precision-Recall Curves:**
-- Purpose: test model discrimination capacity, especially for imbalanced classes.
-- This would include one curve per category of diabetes using a One-vs-Rest approach.
-- It will demonstrate how well biological risk factors enable discrimination between healthy, prediabetic, and diabetic states.
+- Purpose: to test model discrimination capacity, especially for imbalanced classes.
+- This included one curve per category of diabetes using a One-vs-Rest approach.
+- These curves demonstrated how well biological risk factors enabled discrimination between healthy, prediabetic, and diabetic states.
 
 ### Interactive Plots:
 
 - [**Naive Bayes: Probability Plot**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/NB_plot.html)
 - [**SVM: PCA Visualization (Correct vs Misclassified)**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/SVM_plot.html)
 - [**Logistic Regression: Probability Space Visualization**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/LR_plot.html)
+- [**XGBoost: Interactive SHAP Visualization**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/XGB_plot.html)
+
 
 
 
 ### Summary:
-Collectively, these plots will deliver:
-- A clear view of geographic, demographic, and lifestyle trends in the BRFSS dataset.
+Collectively, these plots delivered:
+- A clear view of demographic and lifestyle trends in the BRFSS dataset.
 - Intuitive representations of model performance (confusion matrix, ROC/PR).
+
+
+## Conclusion
+
+Using the 2024 BRFSS survey, we built a full, end-to-end pipeline that started from raw ASCII files and codebooks and produced a cleaned, feature-engineered dataset suitable for large-scale modeling. Data cleaning and feature selection reduced the feature space from over 300 variables to a compact set of clinically and statistically meaningful predictors, while the proportion of valid responses increased from roughly half of the records to nearly 90%. Exploratory visualizations consistently showed that diabetes clustered in older age groups, higher BMI categories, lower income and education strata, and among respondents with poorer self-reported health, limited physical activity, and multiple chronic conditions, underscoring the combined impact of metabolic, behavioral, and socioeconomic factors on diabetes risk.
+
+Because the target variable was highly imbalanced (≈83% non-diabetic, 14.5% diabetic, 2.5% pre-diabetic), we trained all models on an ADASYN-oversampled version of the training set to synthetically enrich the minority classes. Even with oversampling, confusion matrices and precision–recall curves showed that distinguishing pre-diabetes from both non-diabetes and diabetes remained challenging, reflecting substantial overlap in risk profiles and the small size of the borderline class.
+
+Across baseline models, regularized multinomial logistic regression and k-nearest neighbors with Manhattan distance provided the strongest overall performance, with macro F1 scores around 0.41 and ROC–AUC values in the mid-0.7s. Naïve Bayes and Euclidean kNN lagged behind, tending to over-predict the majority class despite ADASYN. Logistic regression, in particular, offered a good balance between interpretability, probability calibration, and minority-class performance, as illustrated by its probability-space visualizations and ROC curves.
+
+Among the advanced methods, tree-based ensembles and linear SVM delivered the best discrimination. Random Forest and XGBoost achieved the highest accuracies (≈0.83–0.84) and strong macro ROC–AUC scores around 0.76, but their macro F1 scores were slightly lower because they remained conservative in predicting the pre-diabetes class. Linear SVM reached the highest macro F1 (≈0.42) with competitive ROC–AUC, reflecting a more balanced trade-off between majority and minority detection. Due to computational constraints on this high-dimensional, 450k-row dataset, we only trained a linear SVM and did not run an RBF-kernel SVM. Feature-importance plots and SHAP analyses for Random Forest and XGBoost consistently elevated general health, BMI and BMI category, age, weight, vaccination and preventive-care variables, and income/education as key predictors—closely mirroring the patterns observed in our exploratory analysis.
+
+Overall, our results suggest that ensemble methods such as Random Forest and XGBoost are well-suited when the goal is high overall accuracy and strong ranking ability, while linear SVM and regularized logistic regression are preferable when macro-averaged performance and minority-class recall are prioritized. In all cases, model outputs should be viewed as decision-support tools rather than diagnostic instruments, particularly given the difficulty of reliably identifying pre-diabetic individuals. The pipeline we developed—from reproducible data extraction and cleaning to modeling, interpretation, and visualization—provides a practical framework for future work, including cost-sensitive training, more aggressive hyperparameter tuning, and fairness-aware evaluation across demographic subgroups.
