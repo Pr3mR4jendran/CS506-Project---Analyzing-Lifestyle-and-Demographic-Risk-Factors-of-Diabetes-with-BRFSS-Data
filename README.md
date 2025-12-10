@@ -255,7 +255,9 @@ Visualizations will include both result presentation and primary exploratory dat
 
 ### Interactive Plots:
 
-- [**Naive Bayes Probability Plot**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/NB_plot.html)
+- [**Naive Bayes: Probability Plot**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/NB_plot.html)
+- [**SVM: PCA Visualization (Correct vs Misclassified)**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/SVM_plot.html)
+- [**Logistic Regression: Probability Space Visualization**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/LR_plot.html)
 
 
 
