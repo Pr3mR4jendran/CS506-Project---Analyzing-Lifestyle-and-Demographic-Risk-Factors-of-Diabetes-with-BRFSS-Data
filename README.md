@@ -264,37 +264,26 @@ Random forest and XGBoost achieved the highest overall accuracies (around 0.83) 
 Overall, logistic regression (with L1-based feature selection), the linear SVM, and XGBoost emerged as the most competitive models. Logistic regression and the linear SVM achieved the strongest macro recall and F1 scores when combined with class-weighted loss and ADASYN oversampling, making them the most sensitive to diabetic and pre-diabetic cases. Random forest and XGBoost delivered the highest overall accuracies (around 0.83) and the lowest log-loss values, offering better calibrated probabilities and stronger performance on the majority class. Taken together, these results suggest that XGBoost or random forest are reasonable choices when overall accuracy and probability estimates are prioritized, while logistic regression and the linear SVM are preferable when interpretability and minority-class detection are more important.
 
 
-## Visualization 
+## Result Visualization 
 
-Visualizations included both result presentation and primary exploratory data analysis. Since the BRFSS dataset contains health and lifestyle traits for over 400,000 individuals in the U.S., we used plots to  
-(1) understand the distribution of the data and  
-(2) visualize how well the models performed.
+After training all eight classifiers, we generated a comprehensive suite of static and interactive visualizations to evaluate predictive performance, interpret decision boundaries, and compare models. These plots allowed us to diagnose strengths, weaknesses, and feature dependencies across models, especially in the presence of strong class imbalance.
 
-
-### Exploratory Data Visualizations (before modeling)
-
-1. **Data Cleaning Assessment:**
-- Purpose: to measure the frequency and correlation of missing data, and learn the impact of preprocessing on dataset quality.
-- Heatmaps (missingness correlation before vs. after cleaning), Pie Charts (composition of valid vs. missing data), and a Bar Plot (feature retention count).
-- Interpretation: Cleaning reduced correlated missingness, validated responses from ~48% to 89%, and removed duplicate variables (301 → 79) to create a sound basis for modeling.
-
-2. **Target Exploration:**
-- Purpose: To examine the overall class distribution of diabetes-related responses and detect any imbalance.
-- A Categorical Bar Plot with percentages of respondents having and not having diabetes, including borderline/prediabetes.
-- Interpretation: The data showed a strong class imbalance, with most respondents reporting “No diabetes,” guiding later model balancing strategies.
-  
-3. **Demographic and Lifestyle Factors vs. Diabetes:**
-- Purpose: To explore the correlation between diabetes rate and behavioral and demographic characteristics.
-- A faceted bar plot grid compared diabetes status by factor such as age, race, income, education, employment, and healthcare access.
-- Interpretation: Stark demographic and socioeconomic disparities were observed — older individuals, lower-income groups, and those with poor healthcare access showed higher diabetes rate.
-
-
-### Result Visualizations (after modeling)
 
 1. **Confusion Matrix Heatmap:**
 - Purpose: to show which categories the classifier performed well on and which it confused (e.g., Prediabetes vs. Diabetes).
 - In this matrix, the rows were true classes and the columns were predicted classes.
 - The normalized values were displayed as a heatmap for readability.
+
+### Confusion Matrices Grid
+<img width="4255" height="2234" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/Summary_confusion_matrix_grid.png" />
+These side-by-side confusion matrices show how each classifier distributes predictions across the four diabetes categories. Tree-based models (Random Forest, XGBoost) exhibit the strongest diagonal patterns, indicating more consistent classification. Linear and probabilistic models show higher confusion between “Prediabetes” and “No Diabetes.”
+
+### Per-Class Recall Comparison Heatmap
+<img width="4255" height="2234" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/Summary_Per_class_recall_heatmap.png" />
+This heatmap summarizes each model’s ability to correctly identify classes 1, 3, and 4. Ensemble models achieve very high recall for the majority class but struggle with the minority diabetic class. In contrast, models like Logistic Regression and SVM show more balanced recall at the cost of overall accuracy.
+
 
 2. **ROC Curves / Precision-Recall Curves:**
 - Purpose: to test model discrimination capacity, especially for imbalanced classes.
