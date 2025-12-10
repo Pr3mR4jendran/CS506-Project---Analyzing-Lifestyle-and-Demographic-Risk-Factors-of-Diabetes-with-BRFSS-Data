@@ -8,6 +8,7 @@
 - Sara Alsowaimel (U86273437)
 
 Midterm Report YouTube Video: https://youtu.be/Qgp6xDooT5o
+
 Final Report YouTube Video:
 
 ## Description of the Project
