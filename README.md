@@ -253,6 +253,11 @@ Visualizations will include both result presentation and primary exploratory dat
 - This would include one curve per category of diabetes using a One-vs-Rest approach.
 - It will demonstrate how well biological risk factors enable discrimination between healthy, prediabetic, and diabetic states.
 
+### Interactive Plots:
+
+- [**Naive Bayes Probability Plot**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/NB_plot.html)
+
+
 
 ### Summary:
 Collectively, these plots will deliver:
