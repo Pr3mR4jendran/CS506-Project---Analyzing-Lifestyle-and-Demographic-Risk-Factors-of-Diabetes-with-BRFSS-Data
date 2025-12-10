@@ -117,24 +117,37 @@ All steps were implemented and documented in the Data_Cleaning_Feature_Extractio
 ### Demographics vs Diabetes
 <img width="5366" height="3787" alt="demographics_vs_diabetes" src="https://github.com/user-attachments/assets/a25151e3-e4be-429d-8506-19601878461d" />
 
+Across all demographic and lifestyle variables, individuals with diabetes (red) are consistently overrepresented in older age groups, lower education categories, lower income brackets, and those not currently employed, highlighting strong socioeconomic and age-associated risk patterns. Race also shows notable disparities, with certain race categories showing higher diabetic counts relative to their group size. Respondents without healthcare coverage (HLTHPL2 = 2) have a visibly elevated proportion of diabetes cases, supporting the link between poor healthcare access and unmanaged metabolic risk. Overall, the distribution demonstrates that diabetes prevalence is not uniform — it clusters heavily around age, socioeconomic disadvantage, and reduced healthcare access, aligning with known public-health patterns.
+
 ### Diabetes Distribution Plot
 <img width="2322" height="1429" alt="diabetes_distribution_plot" src="https://github.com/user-attachments/assets/f6dfd004-d8de-4139-9b68-ac94c402c5b9" />
+
+The dataset is heavily imbalanced: 83% of respondents report no diabetes, while only 14.5% report a diabetes diagnosis and 2.5% report pre-diabetes. This extreme skew means that without correction, models will naturally default toward predicting the majority class. The small size of the pre-diabetes group in particular highlights the need for class weighting or resampling to ensure clinically meaningful minority-class detection. Overall, this distribution confirms that diabetes prediction in BRFSS is an imbalanced classification problem, shaping all later modeling choices.
 
 ### Feature Retention Bar Graph
 <img width="2031" height="1900" alt="feature_retention_bar" src="https://github.com/user-attachments/assets/a0db6575-6a66-4624-8153-83eedb2cb290" />
 
+The feature count drops from 301 to 77, showing that preprocessing removed a large number of variables with excessive missingness, redundancy, or little relevance to diabetes prediction. This reduction improves model efficiency by eliminating noise and preventing overfitting. Keeping only higher-quality variables ensures that downstream models learn from features with real predictive value, rather than being diluted by poorly populated or uninformative fields.
+
 ### Health vs Diabetes Bar Graph
 <img width="6075" height="4714" alt="health_vs_diabetes" src="https://github.com/user-attachments/assets/1cd68265-9bdf-4356-8e83-b13d0de2f65d" />
+
+Diabetes prevalence (red) is visibly higher among individuals with elevated BMI categories, weekly inactivity, and those reporting chronic conditions like stroke, asthma, or heart disease. Smokers and heavy drinkers also show disproportionately more diabetes cases relative to their group sizes, reflecting well-established metabolic risk patterns. Exercise variables (EXERANY2, _TOTINDA) show the opposite trend—those who report no regular physical activity contain a higher share of diabetic respondents. Overall, these patterns reinforce that diabetes strongly co-occurs with obesity, inactivity, cardiovascular burden, and other lifestyle-related risk factors.
 
 ### Missing Value Correlation Heatmaps
 <img width="4255" height="2234" alt="missing-value_correlation_heatmap" src="https://github.com/user-attachments/assets/0c8000a0-eb76-4bd5-96d0-957c098a8bae" />
 
+Before cleaning, many variables show strong, clustered missingness correlations, meaning entire groups of features tended to be missing together—an indication of structural survey gaps or low-response sections. After cleaning, these dense blocks largely disappear, and most variables exhibit weak or near-independent missingness, showing that preprocessing successfully removed problematic or sparsely populated fields. This shift indicates a healthier dataset: missingness is no longer driving artificial relationships between variables, reducing bias and improving the reliability of downstream modeling.
+
 ### Missingness Pie Charts
 <img width="4332" height="2600" alt="missingness_pie_chart" src="https://github.com/user-attachments/assets/4d2fa042-6e5e-4e31-8a70-96aaf9974858" />
+
+Before cleaning, nearly half of all entries (48.4%) were missing or invalid, showing that the raw BRFSS dataset contains extensive non-response and unusable codes. After cleaning, the proportion of valid data surges to 89.1%, with all forms of invalid or ambiguous responses reduced to small single-digit percentages. This demonstrates that preprocessing successfully removed low-quality records and standardized missingness, resulting in a far more reliable and analysis-ready dataset.
 
 ### Health & Behaviors Radar Chart
 <img width="3036" height="2402" alt="radar_chart" src="https://github.com/user-attachments/assets/cb121ac6-fea3-454a-9b01-d3740053f4d4" />
 
+Across nearly every health domain, the diabetic group (red) shows higher rates of chronic conditions and risk factors than the borderline/pre-diabetic group (yellow). Diabetic respondents exhibit markedly greater prevalence of heart disease, poor mental health days, and higher BMI categories, all aligning with known metabolic comorbidities. They also show slightly reduced physical activity and higher rates of smoking, while alcohol use is lower—consistent with clinical patterns where diagnosed individuals often reduce alcohol consumption. Overall, the radar chart highlights a clear escalation of health burdens as individuals progress from pre-diabetic to diabetic status.
 
 ## Modeling 
 
