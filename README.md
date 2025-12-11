@@ -274,13 +274,15 @@ After training all eight classifiers, we generated a comprehensive suite of stat
 - In this matrix, the rows were true classes and the columns were predicted classes.
 - The normalized values were displayed as a heatmap for readability.
 
-### Confusion Matrices Grid
-<img width="4255" height="2234" alt="confusion_matrix_grid"
-     src="Results/Visualizations/Final_visualizations/Summary_confusion_matrix_grid.png" />
-These side-by-side confusion matrices show how each classifier distributes predictions across the four diabetes categories. Tree-based models (Random Forest, XGBoost) exhibit the strongest diagonal patterns, indicating more consistent classification. Linear and probabilistic models show higher confusion between “Prediabetes” and “No Diabetes.”
+#### Confusion Matrices Grid
 
-### Per-Class Recall Comparison Heatmap
-<img width="4255" height="2234" alt="confusion_matrix_grid"
+<img width="3036" height="2402" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/Summary_confusion_matrix_grid.png" />
+These side-by-side confusion matrices show how each classifier distributes predictions across the four diabetes categories. Tree-based models (Random Forest, XGBoost) exhibit the strongest diagonal patterns, indicating more consistent classification. Linear and probabilistic models show higher confusion between “Prediabetes” and “No Diabetes.” An interactive version can be found here: [**Interactive Confusion-Matrix Explorer**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/Interactive_CM_Explorer.html)
+
+#### Per-Class Recall Comparison Heatmap
+
+<img width="3036" height="2402" alt="confusion_matrix_grid"
      src="Results/Visualizations/Final_visualizations/Summary_Per_class_recall_heatmap.png" />
 This heatmap summarizes each model’s ability to correctly identify classes 1, 3, and 4. Ensemble models achieve very high recall for the majority class but struggle with the minority diabetic class. In contrast, models like Logistic Regression and SVM show more balanced recall at the cost of overall accuracy.
 
@@ -290,22 +292,80 @@ This heatmap summarizes each model’s ability to correctly identify classes 1, 
 - This included one curve per category of diabetes using a One-vs-Rest approach.
 - These curves demonstrated how well biological risk factors enabled discrimination between healthy, prediabetic, and diabetic states.
 
-### Interactive Plots:
+<img width="3036" height="2402" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/ROC_grid.png" />
 
-- [**Interactive Confusion-Matrix Explorer**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/Interactive_CM_Explorer.html)
-- [**Interactive Model Performance Comparison**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/Interactive_Model_Comparison.html)
+This grid of ROC curves compares how effectively each classifier separates the diabetes classes across varying probability thresholds. Tree-based models like Random Forest and XGBoost achieve the highest AUC values, reflecting stronger discriminative performance. Linear and probabilistic models show smoother but less separated curves, indicating weaker class boundary definition. Presenting all models side-by-side highlights performance trends and confirms the superiority of ensemble methods for this imbalanced classification task.
+
+3. **Model Performance Comparison**
+
+- Purpose: to summarize how all models perform across multiple evaluation metrics in a single view.
+- Metrics included: Accuracy, Macro Precision, Macro Recall, Macro F1 Score, and Log Loss.
+- This visualization helps identify trade-offs between predictive accuracy, class balance, and probabilistic calibration.
+
+<img width="3036" height="2402" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/Interactive_Model_Comparison.png" />
+
+This grouped bar chart highlights that ensemble methods (Random Forest and XGBoost) achieve the highest accuracy and F1 scores with relatively low log loss, while Naïve Bayes and Euclidean kNN perform noticeably worse across most metrics. Logistic Regression and SVM offer a middle ground, with moderate accuracy but more balanced recall. Overall, the plot visually reinforces the conclusion that XGBoost and Random Forest are the most reliable models for this task. An interactive version of this plot can be found here: [**Interactive Model Performance Comparison**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/Interactive_Model_Comparison.html)
+
+
+
+### Top - Performing Models
+
+Across all evaluation metrics and visual diagnostics, including confusion matrices, per-class recall, ROC curves, and global model performance, **XGBoost** and **Random Forest** emerged as the **strongest classifiers** in this study. Both models displayed the *highest accuracy, superior ROC–AUC scores, and the most consistent class separation patterns*, even under substantial class imbalance.
+Given their clear advantage over the other models, we conducted a closer examination of their behavior, interpretability, and feature importance in the following sections.
+
+1. **Random Forest**
+Since Random Forest ranked among the strongest performers across all evaluation metrics, we examined its internal behavior more closely through *feature-importance analysis* and *partial dependence diagnostics*.
+
+<img width="3036" height="2402" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/RF_feature_importance.png" />
+     
+This plot highlights the features that contributed most to the Random Forest’s predictions, measured using **Gini importance**. **General health**, **BMI categories**, and **age-related variables** emerge as dominant predictors, aligning with known clinical risk factors for diabetes. The presence of oral-health and healthcare-access indicators further suggests that lifestyle and utilization factors meaningfully influence the model’s decisions. Overall, the model is relying on highly interpretable and clinically relevant features rather than noise.
+
+<img width="3036" height="2402" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/RF_partial_dependence_top_feature.png" />
+
+This partial dependence plot shows how changes in **GENHLTH (self-rated general health)** influence the predicted probability of diabetes while holding other variables constant. The monotonic upward trend reflects a clinically intuitive pattern: poorer perceived health corresponds to a higher modeled risk of diabetes. This reinforces that self-reported health status captures underlying disease burden and lifestyle factors that the model considers meaningful. It also illustrates how Random Forest models learn nonlinear, interpretable relationships from survey-based health data.
+
+2. **XGBoost**
+Because XGBoost consistently matched or outperformed other models in accuracy, AUC, and classification stability, we examined its feature behavior in greater depth using SHAP values and gain-based feature importance.
+
+<img width="3036" height="2402" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/XGB_SHAP_Value_plot.png" />
+The **SHAP summary plot** shows how each feature contributes to XGBoost’s predictions across all samples, capturing both direction and magnitude of influence. Features like *general health, BMI category, age, and oral-health indicators* produce the strongest and most consistent impacts, with high-value inputs often pushing predictions toward the diabetic class. The layered red–blue distribution reveals nonlinear relationships that traditional models may miss. This visualization highlights XGBoost’s ability to learn rich interaction patterns from complex behavioral and health survey data. An interactive version of this plot can be found here: [**XGBoost: Interactive SHAP Visualization**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/XGB_plot.html)
+
+<img width="3036" height="2402" alt="confusion_matrix_grid"
+     src="Results/Visualizations/Final_visualizations/XGB_gain_importance.png" />
+This bar plot ranks *features based on their contribution to reducing loss during tree splits—XGBoost’s built-in gain metric*. General health and BMI category emerge as the dominant predictors, followed by oral-health measures and vaccination/healthcare access indicators. These features align with clinically known risk pathways for diabetes, providing intuitive validation of the model’s internal priorities. The plot also shows XGBoost’s reliance on a broader but meaningful set of predictors compared to simpler models.
+
+Together, these interpretability analyses highlight how both Random Forest and XGBoost leverage clinically meaningful health, lifestyle, and demographic factors to identify diabetes risk. Their strong performance, combined with transparent feature behavior, reinforces their suitability as the most reliable models in this study.
+
+
+### Other Visualizations:
+
+- All Preliminary Visualizations can be found in: ```Results/Visualizations/Preliminary_Visualization```
+- All Final Visualizations can be found in: ```Results/Visualizations/Final_visualizations```
+
+**More Interactive Plots**
+
 - [**Naive Bayes: Probability Plot**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/NB_plot.html)
 - [**SVM: PCA Visualization (Correct vs Misclassified)**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/SVM_plot.html)
 - [**Logistic Regression: Probability Space Visualization**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/LR_plot.html)
-- [**XGBoost: Interactive SHAP Visualization**](https://raw.githack.com/Pr3mR4jendran/CS506-Project---Analyzing-Lifestyle-and-Demographic-Risk-Factors-of-Diabetes-with-BRFSS-Data/main/docs/XGB_plot.html)
 
 
 
+### Summary
 
-### Summary:
-Collectively, these plots delivered:
-- A clear view of demographic and lifestyle trends in the BRFSS dataset.
-- Intuitive representations of model performance (confusion matrix, ROC/PR).
+The visualizations collectively reveal how **demographic**, **lifestyle**, and **health factors** shape diabetes outcomes in the **BRFSS dataset**, while also highlighting the challenges posed by strong **class imbalance**.
+
+- Exploratory analyses clarified **feature distributions** and **data quality**.  
+- Performance plots demonstrated clear differences between **model families**.  
+- **Ensemble methods**—especially **Random Forest** and **XGBoost**—delivered superior **accuracy**, **AUC**, and **class separation**.  
+- Interpretability tools such as **feature importance** and **SHAP analyses** confirmed the relevance of meaningful predictors.
+
+Together, these visual tools provide a comprehensive understanding of both the **data** and the **behavior of the models**, forming a clear and transparent foundation for interpreting the project’s final results.
+
 
 
 ## Conclusion
