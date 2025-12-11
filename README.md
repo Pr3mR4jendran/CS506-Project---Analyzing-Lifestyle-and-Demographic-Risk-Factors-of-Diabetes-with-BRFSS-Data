@@ -9,7 +9,7 @@
 
 Midterm Report YouTube Video: https://youtu.be/Qgp6xDooT5o
 
-Final Report YouTube Video:
+Final Report YouTube Video: https://youtu.be/Mfd4_aOuIpk
 
 ## Description of the Project
 Our project focuses on predicting diabetes among the U.S. population using structured health and lifestyle data. The dataset we selected, the CDC Behavioral Risk Factor Surveillance System (BRFSS) Dataset, contains survey responses from hundreds of thousands of adults and includes features such as body mass index (BMI), physical activity, general health, and demographic traits.  
